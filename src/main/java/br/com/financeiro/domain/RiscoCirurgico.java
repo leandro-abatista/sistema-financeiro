@@ -22,7 +22,7 @@ public class RiscoCirurgico extends GenericDomain {
 	@Column(nullable = false, length = 150)
 	private String nome;
 	@Column(nullable = false)
-	private Integer idade;
+	private String idade;
 	@Column(nullable = false, length = 15)
 	private String sexo;
 	@Column(nullable = false)
@@ -104,23 +104,11 @@ public class RiscoCirurgico extends GenericDomain {
 		this.nome = nome;
 	}
 
-	public Integer getIdade() {
-//		Calendar dateOfBirth = new GregorianCalendar();
-//		dateOfBirth.setTime(dataN);
-//		//cria um objeto calendar com a data atual
-//		Calendar today = Calendar.getInstance();
-//		//obtém a idade baseado no ano
-//		Integer age = today.get(Calendar.YEAR) - dateOfBirth.get(Calendar.YEAR);
-//		dateOfBirth.add(Calendar.YEAR, age);
-//		//se a data de hoje é antes da data de nascimento, então dimninue 1
-//		if (today.before(dateOfBirth)) {
-//			age--;
-//		}
-		
+	public String getIdade() {
 		return idade;
 	}
 
-	public void setIdade(Integer idade) {
+	public void setIdade(String idade) {
 		this.idade = idade;
 	}
 
