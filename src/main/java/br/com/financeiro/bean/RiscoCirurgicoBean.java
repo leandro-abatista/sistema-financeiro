@@ -1,11 +1,14 @@
 package br.com.financeiro.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+
+import org.omnifaces.util.Messages;
 
 import br.com.financeiro.dao.CirurgiaDao;
 import br.com.financeiro.dao.EnderecoDao;
@@ -16,6 +19,7 @@ import br.com.financeiro.domain.Cirurgia;
 import br.com.financeiro.domain.Endereco;
 import br.com.financeiro.domain.Medico;
 import br.com.financeiro.domain.RiscoCirurgico;
+import br.com.financeiro.domain.Usuario;
 
 @ManagedBean(name = "rcBean")
 @ViewScoped
@@ -73,11 +77,36 @@ public class RiscoCirurgicoBean implements Serializable {
 		return medicos;
 	}
 	
+	/**
+	 * Método para criar um novo objeto ARC
+	 */
 	public void novo() {
-		riscoCirurgico = new RiscoCirurgico();
-		enderecos = enderecoDao.listar();
-		cirurgias = cirurgiaDao.listar();
-		medicos = medicoDao.listar();
+		try {
+			riscoCirurgico = new RiscoCirurgico();
+			enderecos = enderecoDao.listar();
+			cirurgias = cirurgiaDao.listar();
+			medicos = medicoDao.listar();
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Erro ao tentar gerar uma nova avaliação de risco cirúrgico!");
+			erro.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Método para inserir um novo registro no banco de dados
+	 */
+	public void salvar() {
+		try {
+			Usuario usuario = usuarioDao.buscar(autenticacaoBean.getUsuarioLogado().getId());
+			riscoCirurgico.setUsuario(usuario);
+			riscoCirurgico.setDataAvaliacao(new Date());
+			riscoCirurgicoDao.merge(riscoCirurgico);
+			novo();
+			Messages.addGlobalInfo("Avaliação de Risco Cirúrgico salvo com sucesso!");
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Erro ao tentar salvar uma nova avaliação de risco cirúrgico!");
+			erro.printStackTrace();
+		}
 	}
 
 }

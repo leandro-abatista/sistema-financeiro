@@ -88,6 +88,23 @@
 						<f:selectItem itemLabel="Feminino" itemValue="Feminino" />
 					</p:selectOneMenu>
 					
+					<h:outputLabel for="celular" value="Celular:*" />
+					<p:inputMask
+						mask="(99) 9.9999-9999" 
+						id="celular" 
+						value="#{rcBean.riscoCirurgico.celular}"
+						maxlength="20" 
+						size="20"
+						placeholder="Ex: (83) 9.9999-9999"/>
+						
+					<h:outputLabel for="email" value="E-mail:*" />
+					<p:inputText 
+						id="email" 
+						value="#{rcBean.riscoCirurgico.email}"
+						maxlength="50" 
+						size="50" 
+						placeholder="Ex: exemplo@exemplo.com" />
+					
 					<h:outputLabel for="solicitante" value="Médico Solicitante:*" />
 					<p:selectOneMenu id="solicitante"
 						filter="true" 
@@ -101,6 +118,21 @@
 							var="medico"
 							itemValue="#{medico}" 
 							itemLabel="#{medico.nome} #{medico.sobreNome}"/>
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="cirurgia" value="Tipo de Cirurgia:*" />
+					<p:selectOneMenu id="cirurgia"
+						filter="true" 
+						value="#{rcBean.riscoCirurgico.cirurgia}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Médico Solicitante' é obrigatório">
+						
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma cirurgia" />
+						<f:selectItems 
+							value="#{rcBean.cirurgias}" 
+							var="cirurgia"
+							itemValue="#{cirurgia}" 
+							itemLabel="#{cirurgia.descricao}"/>
 					</p:selectOneMenu>
 
 				</p:panelGrid>
@@ -147,6 +179,15 @@
 							<f:selectItem itemLabel="TABAGISMO" itemValue="TABAGISMO" />
 							<f:selectItem itemLabel="INTERCORRÊNCIA ANESTÉSICA" itemValue="INTERCORRÊNCIA ANESTÉSICA" />
 						</p:selectManyCheckbox>
+						
+						<h:outputLabel for="mu" value="Medicamento em uso:*" />
+						<p:inputText 
+							id="mu" 
+							value="#{rcBean.riscoCirurgico.medicamentoEmUso}"
+							maxlength="100" 
+							size="60" 
+							required="true"
+							requiredMessage="O campo 'Medicamento em uso' é obrigatório!" />
 
 				</p:panelGrid>
 
@@ -157,8 +198,9 @@
 				<p:panelGrid columns="4" styleClass="ui-panelgrid-blank" id="panelCadastro3">
 				
 					<h:outputLabel for="eg" value="Estado Geral:*" />
-					<p:selectOneMenu id="eg" filter="true" style="font-weight: bold"
-						
+					<p:selectOneMenu id="eg" 
+						filter="true" 
+						value="#{rcBean.riscoCirurgico.estadoGeral}"
 						converter="omnifaces.SelectItemsConverter" required="true"
 						requiredMessage="O campo 'Estado Geral' é obrigatório">
 						<f:selectItem noSelectionOption="true" itemLabel="Selecione o Estado Geral" />
@@ -169,8 +211,9 @@
 					</p:selectOneMenu>
 					
 					<h:outputLabel for="pm" value="Pele e Mucosas:*" />
-					<p:selectOneMenu id="pm" filter="true" style="font-weight: bold"
-						
+					<p:selectOneMenu id="pm" 
+						filter="true" 
+						value="#{rcBean.riscoCirurgico.peleMucosas}"
 						converter="omnifaces.SelectItemsConverter" required="true"
 						requiredMessage="O campo 'Pele e Mucosas' é obrigatório">
 						<f:selectItem noSelectionOption="true" itemLabel="Selecione Pele e Mucosas" />
@@ -180,7 +223,9 @@
 					</p:selectOneMenu>
 					
 					<h:outputLabel for="ar" value="AR:*" />
-					<p:selectOneMenu id="ar" filter="true" style="font-weight: bold"
+					<p:selectOneMenu id="ar"
+						value="#{rcBean.riscoCirurgico.ar}" 
+						filter="true"
 						converter="omnifaces.SelectItemsConverter" 
 						required="true"
 						requiredMessage="O campo 'AR' é obrigatório">
@@ -190,7 +235,9 @@
 					</p:selectOneMenu>
 					
 					<h:outputLabel for="acv" value="ACV:*" />
-					<p:selectOneMenu id="acv" filter="true" style="font-weight: bold"
+					<p:selectOneMenu id="acv" 
+						filter="true" 
+						value="#{rcBean.riscoCirurgico.acv}"
 						converter="omnifaces.SelectItemsConverter" 
 						required="true"
 						requiredMessage="O campo 'ACV' é obrigatório">
@@ -201,7 +248,9 @@
 					</p:selectOneMenu>
 					
 					<h:outputLabel for="ta" value="TA:*" />
-					<p:selectOneMenu id="ta" filter="true" 
+					<p:selectOneMenu id="ta"
+						value="#{rcBean.riscoCirurgico.ta}" 
+						filter="true" 
 						converter="omnifaces.SelectItemsConverter" 
 						required="true"
 						requiredMessage="O campo 'TA' é obrigatório">
@@ -399,7 +448,16 @@
 				
 				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
 					<p:commandButton value="Salvar" 
-						
+						actionListener="#{rcBean.salvar}"
+						update=":mensagem :formCadastro:panelCadastro
+											:formCadastro:panelCadastro1
+											:formCadastro:panelCadastro2
+											:formCadastro:panelCadastro3
+											:formCadastro:panelCadastro4
+											:formCadastro:panelCadastro5
+											:formCadastro:panelCadastro6
+											:formCadastro:panelCadastro7
+											:formCadastro:panelCadastro8"
 						oncomplete="PF('dialogo').hide();" icon="fa fa-save"/>
 					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" icon="fa fa-remove"/>
 				</p:panelGrid>

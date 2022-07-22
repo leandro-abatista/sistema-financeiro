@@ -31,6 +31,10 @@ public class RiscoCirurgico extends GenericDomain {
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataNascimento;
+	@Column(nullable = true, length = 20)
+	private String celular;
+	@Column(nullable = true, length = 150)
+	private String email;
 	@Column(length = 255)
 	private String observacao;
 	@Column(nullable = true)
@@ -43,30 +47,30 @@ public class RiscoCirurgico extends GenericDomain {
 	private String estadoGeral;
 	@Column(nullable = true, length = 20)
 	private String peleMucosas;
-	@Column(nullable = true, length = 40)
+	@Column(nullable = true, length = 80)
 	private String ar;
-	@Column(nullable = true, length = 40)
+	@Column(nullable = true, length = 180)
 	private String acv;
-	@Column(nullable = true, length = 10)
+	@Column(nullable = true, length = 20)
 	private String ta;
 
 	@Column(nullable = true, length = 100)
 	private String exameHematologico;
 
-	@Column(nullable = true, length = 30)
+	@Column(nullable = true, length = 80)
 	private String raioXTorax;
-	@Column(nullable = true, length = 30)
+	@Column(nullable = true, length = 80)
 	private String ecoCardiograma;
-	@Column(nullable = true, length = 50)
+	@Column(nullable = true, length = 80)
 	private String eletrocardiograma;
-	@Column(nullable = true, length = 50)
+	@Column(nullable = true, length = 80)
 	private String indiceGoldman;
 
-	@Column(nullable = true, length = 40)
+	@Column(nullable = true, length = 80)
 	private String tabelaAsa;
-	@Column(nullable = true, length = 40)
+	@Column(nullable = true, length = 80)
 	private String tabelaNyha;
-	@Column(nullable = true, length = 40)
+	@Column(nullable = true, length = 80)
 	private String criteriosLee;
 	@Column(nullable = true, length = 10)
 	private String riscoCirurgicoGrau;
@@ -89,12 +93,25 @@ public class RiscoCirurgico extends GenericDomain {
 	@JoinColumn(name = "id_medico", referencedColumnName = "id", nullable = false)
 	private Medico medico;
 
-	@Temporal(TemporalType.TIMESTAMP) // essa anotação carrega hora e data
-	private Date ultimoAcesso;
-
 	@Version
 	@Column(name = "VERSAO", nullable = false)
 	private Long versao;
+	
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public String getNome() {
 		return nome;
@@ -310,14 +327,6 @@ public class RiscoCirurgico extends GenericDomain {
 
 	public void setMedico(Medico medico) {
 		this.medico = medico;
-	}
-
-	public Date getUltimoAcesso() {
-		return ultimoAcesso;
-	}
-
-	public void setUltimoAcesso(Date ultimoAcesso) {
-		this.ultimoAcesso = ultimoAcesso;
 	}
 
 	public Long getVersao() {
