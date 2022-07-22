@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3d780987-ad59-4cbc-90e8-297f1f4b6404">
+	<property name="com.jaspersoft.studio.data.sql.tables" value="ZXN0YWRvIEFTICw2NSw0Nyw2NTNkNTdmMi1iMTE4LTRkZDItYjM2Zi0zZTJhNWRkMTEwYTM7"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Financeiro Data Adapter"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT id,
+	nome,
+	sigla
+FROM estado]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado"/>
+	</field>
+	<field name="sigla" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sigla"/>
+		<property name="com.jaspersoft.studio.field.label" value="sigla"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="550" height="79" uuid="0b9da334-db33-4d1a-b814-c57ced2ab389"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Estados]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="550" height="30" uuid="f30d8f5f-7614-4d37-93a2-65973cc00204"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lista de Estados Cadastrados
+]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="100" height="30" backcolor="#578CAD" uuid="9671c6ef-d7eb-44b2-a6cd-f9d28674ab6f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e414943e-4335-4d7d-938b-3ddeb948c59b"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="100" y="0" width="370" height="30" backcolor="#578CAD" uuid="8803c1e5-0bde-4d37-b309-5e62f9f7aab6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e1e95835-879a-44c4-82bf-698184981ec2"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome do Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="470" y="0" width="80" height="30" backcolor="#578CAD" uuid="aab0eb9a-ecb2-4ab5-a4ae-50705212e213">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6dbff4de-c96c-4ea0-b668-c7194f3c32a6"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sigla]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="100" height="30" uuid="f65d398f-1435-4a5a-8b37-63581f836e48">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e414943e-4335-4d7d-938b-3ddeb948c59b"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="10" width="370" height="30" uuid="21e0a77e-5f6f-411f-9b91-bfcf20dc9bf8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e1e95835-879a-44c4-82bf-698184981ec2"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="10" width="80" height="30" uuid="ad94bc99-1a4f-4ae8-834f-3f29bb10de58">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6dbff4de-c96c-4ea0-b668-c7194f3c32a6"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sigla}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="57" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="550" height="30" uuid="04cc55c9-b23f-4975-aee1-8cf9a1734bf2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Endereço: Ave. Rio Branco, 197 - Centro - Florianópolis-SC]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

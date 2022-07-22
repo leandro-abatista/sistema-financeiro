@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	
+	<ui:define name="conteudo">
+
+	<h:form id="formListagem">
+		<p:panel>
+			<p:panel header="Lista dos Produtos Cadastrados">
+				<p:dataTable emptyMessage="Nenhum registro encontrado." rows="5"
+					paginator="true" id="tabela" value="#{produtoBean.produtos}" var="produto">
+					
+					<p:column headerText="Código" width="80">
+						<h:outputText value="#{produto.id}" />
+					</p:column>
+	
+					<p:column headerText="Descrição" filterBy="#{produto.descricao}">
+						<h:outputText value="#{produto.descricao}" />
+					</p:column>
+	
+					<p:column headerText="Quantidade" width="100">
+						<h:outputText value="#{produto.quantidade}" />
+					</p:column>
+	
+					<p:column headerText="Preço" width="100">
+						<h:outputText value="#{produto.preco}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</h:outputText>	
+					</p:column>
+	
+					<p:column headerText="Fornecedor" filterBy="#{produto.fornecedor.nomeFantasia}">
+						<h:outputText value="#{produto.fornecedor.nomeFantasia}" />
+					</p:column>
+	
+					<p:column headerText="Opções" width="140" >
+						<p:commandButton value="Adicionar" icon="fa fa-plus-square"
+						actionListener="#{vendaBean.adicionar}"
+							update=":formListagem:tableItens :formListagem:panelFinalizacao">
+							<f:attribute name="produtoSelecionado" value="#{produto}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			
+			<p:separator/>
+			
+			<p:panel header="Produtos adicionados no carrinho de compras">
+				<p:dataTable emptyMessage="Nenhum produto adicionado no carrinho de compras." 
+				value="#{vendaBean.itensVenda}"
+				paginatorAlwaysVisible="false" 
+					 var="itemVenda" rows="5" paginator="true" id="tableItens">
+					 
+					<p:column headerText="Cód. Produto" width="70">
+						<h:outputText value="#{itemVenda.produto.id}"/>
+					</p:column>
+					
+					<p:column headerText="Descrição Produto" width="200">
+						<h:outputText value="#{itemVenda.produto.descricao}" />
+					</p:column>
+	
+					<p:column headerText="Preço Unt." width="80">
+						<h:outputText value="#{itemVenda.produto.preco}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+	
+					<p:column headerText="Qtde." width="50">
+						<h:outputText value="#{itemVenda.quantidade}" />
+					</p:column>
+	
+					<p:column headerText="Valor Parcial" width="80">
+						<h:outputText value="#{itemVenda.precoParcial}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Opções" width="80" >
+						<p:commandButton value="Remover" icon="fa fa-times-rectangle"
+						actionListener="#{vendaBean.remover}" 
+						update=":formListagem:tableItens :formListagem:panelFinalizacao">
+							<f:attribute name="itemSelecionado" value="#{itemVenda}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			
+			<f:facet name="footer">
+				<h:panelGrid id="panelFinalizacao" style="background: LightSteelBlue; font-size: 20px; width: 10em" 
+					 columns="2">
+					<p:outputLabel value="Total: R$" />
+					<h:outputText value="#{vendaBean.venda.precoTotal}" style="font-weight: bold;">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</h:outputText>
+				</h:panelGrid>
+				
+				<p:separator/>
+				
+				<p:panelGrid>
+					<p:commandButton value="Finalizar"
+						actionListener="#{vendaBean.finalizar}"
+						update=":mensagem :formFinalizacao:panelFinalizar"
+						icon="fa fa-money"
+						oncomplete="PF('dialogo').show();">
+						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</p:panelGrid>
+			</f:facet>
+		</p:panel>
+	</h:form>
+
+	<p:dialog header="Dados de finalização da venda" widgetVar="dialogo"
+		draggable="false" resizable="false" global="true" closable="false">
+		
+		<h:form id="formFinalizacao">
+			
+			<h:outputText value="Os campos com (*) são obrigatórios." style="color: red; font-weight: bold"/>
+			<p:separator/>
+			
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelFinalizar">
+			
+				<p:outputLabel value="Horário:" />
+				<h:outputText value="#{vendaBean.venda.horario}" style="color: red; font-weight: bold">
+					<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" locale="pt_BR"
+						timeZone="America/Sao_Paulo" />
+				</h:outputText>
+
+				<p:outputLabel value="Total R$:" />
+				<h:outputText value="#{vendaBean.venda.precoTotal}" style="color: red; font-weight: bold">
+					<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+				</h:outputText> 
+				
+				<p:outputLabel for="usuario" value="Usuário Logado:" />
+				<h:outputText id="usuario" value="#{vendaBean.autenticacaoBean.usuarioLogado.pessoa.nome}" />
+
+				<p:outputLabel for="funcionario" value="Funcionário:" />
+				<p:selectOneMenu id="funcionario"
+					style="color: red; font-weight: bold"
+					value="#{vendaBean.venda.funcionario}"
+					converter="omnifaces.SelectItemsConverter" filter="true"
+					filterMatchMode="contains" required="true"
+					requiredMessage="O campo 'Funcionário' é obrigatório">
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionário" />
+					<f:selectItems value="#{vendaBean.funcionarios}" var="funcionario" 
+						itemValue="#{funcionario}"
+						itemLabel="#{funcionario.pessoa.nome} - #{funcionario.pessoa.cpf}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel for="cliente" value="Cliente:" />
+				<p:selectOneMenu id="cliente" 
+					style="color: red; font-weight: bold"
+					value="#{vendaBean.venda.cliente}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					filterMatchMode="contains" filter="true"
+					requiredMessage="O campo 'Cliente' é obrigatório">
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione um cliente" />
+					<f:selectItems value="#{vendaBean.clientes}" var="cliente"
+						itemValue="#{cliente}" 
+						itemLabel="#{cliente.pessoa.nome} - #{cliente.pessoa.cpf}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel for="fp" value="Forma Pagamento:" />
+				<p:selectOneMenu id="fp" 
+					style="color: red; font-weight: bold"
+					value="#{pagamentoBean.pagamento}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					filterMatchMode="contains" filter="true"
+					requiredMessage="O campo 'Forma pagamento' é obrigatório">
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione uma Forma pagamento" />
+					<f:selectItems value="#{pagamentoBean.pagamentos}" var="pagamento"
+						itemValue="#{pagamento}" 
+						itemLabel="#{pagamento.descricao} - #{pagamento.bandeira}" />
+				</p:selectOneMenu>
+				
+			</p:panelGrid>
+			
+			<p:separator/>
+			
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+				<p:commandButton value="Salvar" actionListener="#{vendaBean.salvar}"
+					update=":mensagem :formListagem:tabela :formListagem:tableItens :formListagem:panelFinalizacao"
+					oncomplete="PF('dialogo').hide();" icon="fa fa-save"/>
+				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" icon="fa fa-remove"/>
+			</p:panelGrid>
+		</h:form>
+	
+	</p:dialog>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rel_produto" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4ee8c3f-0bab-49e7-a9ae-a751d1932017">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[cHJvZHV0byBBUyAsNDQsMSwyYTE0NWFkYS0yY2ZkLTQwODMtYWIwZC0xZDM2NmI3OThkMDM7Zm9y
+bmVjZWRvciBBUyAsMjYxLC0xMixmN2EwNzBjOS0wYjU5LTQ3MDMtYjliNC0zNTkyYzZkMzkzMDY7]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Financeiro Data Adapter"/>
+	<parameter name="PARAMETROS_IMAGEM_RELATORIO" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT produto.id,
+	produto.descricao,
+	produto.preco,
+	produto.quantidade,
+	fornecedor.cnpj,
+	fornecedor.razaosocial
+FROM produto
+	INNER JOIN fornecedor ON 
+	 produto.id_fornecedor = fornecedor.id 
+ORDER BY produto.id ASC]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="preco" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="preco"/>
+		<property name="com.jaspersoft.studio.field.label" value="preco"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="quantidade" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="quantidade"/>
+		<property name="com.jaspersoft.studio.field.label" value="quantidade"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="cnpj" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cnpj"/>
+		<property name="com.jaspersoft.studio.field.label" value="cnpj"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fornecedor"/>
+	</field>
+	<field name="razaosocial" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="razaosocial"/>
+		<property name="com.jaspersoft.studio.field.label" value="razaosocial"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fornecedor"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="120" height="70" uuid="f66bc83f-b089-494a-80c5-e15e80c5aa0c"/>
+				<imageExpression><![CDATA[$P{PARAMETROS_IMAGEM_RELATORIO} + "produtos.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Opaque" x="120" y="0" width="435" height="70" forecolor="#FFFFFF" backcolor="#1711D1" uuid="4326d6f0-df58-4412-822c-5ff159868a50"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Produtos]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="8" width="555" height="30" forecolor="#FCFCFC" backcolor="#2311BF" uuid="8a6fcf90-fc8a-4542-b98d-4e65e620b2df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Produtos]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="143" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="10" width="555" height="133" backcolor="#EBE6E6" uuid="e1031577-031e-4233-be78-ffb0930b88d2"/>
+			</rectangle>
+			<textField>
+				<reportElement x="105" y="75" width="95" height="30" forecolor="#F2360C" uuid="1703c17c-e0b5-47b9-ab66-217f666f2918"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{preco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="405" y="75" width="150" height="30" forecolor="#F2360C" uuid="f2c15699-57af-4292-82d5-5d1e4240f8b5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cnpj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="405" y="45" width="150" height="30" forecolor="#F2360C" uuid="5f764398-ad44-4f25-91ed-6b1697e59399"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{razaosocial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="305" y="45" width="95" height="30" uuid="a2d86052-d627-49fc-b4b4-cb7a0817aa89"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11"/>
+				</textElement>
+				<text><![CDATA[Razão Socal:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="105" y="105" width="95" height="30" forecolor="#F2360C" uuid="d2ff8dbf-0410-4931-962c-b672bcf9ffe4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="305" y="75" width="95" height="30" uuid="11c38506-d813-4018-beac-63e75556233a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11"/>
+				</textElement>
+				<text><![CDATA[CNPJ:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="18" width="250" height="27" uuid="5548d046-cec5-4d16-8e99-aa4910a41ab8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dados do Fornecedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="15" width="95" height="30" uuid="80ddb506-ed94-4bb0-a183-9847097448b4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11"/>
+				</textElement>
+				<text><![CDATA[Código:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="105" width="95" height="30" uuid="f6a7e673-5f82-45d7-ab1d-c61501a340a3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11"/>
+				</textElement>
+				<text><![CDATA[Quant.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="105" y="45" width="175" height="30" forecolor="#F2360C" uuid="9d1c9f38-1a03-472e-9efc-7fe1495158c4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="75" width="95" height="30" uuid="a5a617ce-01b8-4715-92da-bea826d092d5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11"/>
+				</textElement>
+				<text><![CDATA[Preço:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="45" width="95" height="30" uuid="66eb5911-e8c2-45af-9376-506f804f6112"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11"/>
+				</textElement>
+				<text><![CDATA[Descrição Item:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="105" y="15" width="95" height="30" forecolor="#F2360C" uuid="424306df-a8a4-4e39-92eb-d970867284d5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="70">
+			<staticText>
+				<reportElement mode="Opaque" x="260" y="40" width="120" height="30" forecolor="#FFFFFF" backcolor="#2F1DCF" uuid="1c697991-232b-4f38-880a-918830f1fec4"/>
+				<textElement textAlignment="Right">
+					<font fontName="Ubuntu" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório impresso em:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement mode="Opaque" x="380" y="40" width="90" height="30" forecolor="#FFFFFF" backcolor="#2F1DCF" uuid="2f0f521a-7602-48db-99d7-468f3f99f8d7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Ubuntu" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="40" width="260" height="30" forecolor="#FFFFFF" backcolor="#2F1DCF" uuid="e70bbbd1-fcf1-4838-8b43-e92ada95c945"/>
+				<textElement textAlignment="Left">
+					<font fontName="Ubuntu" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["   Página de referência: " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm:ss">
+				<reportElement mode="Opaque" x="470" y="40" width="85" height="30" forecolor="#FFFFFF" backcolor="#2F1DCF" uuid="4ddfcedb-e007-4f72-941e-b06c8ba69103"/>
+				<textElement textAlignment="Center">
+					<font fontName="Ubuntu" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="10" width="555" height="30" forecolor="#FFFFFF" backcolor="#2F1DCF" uuid="4bf1fe90-4eb3-4859-94e0-5dd80c14d579"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Endereço: Ave. Rio Branco, 197 - Centro - Florianópolis-SC]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

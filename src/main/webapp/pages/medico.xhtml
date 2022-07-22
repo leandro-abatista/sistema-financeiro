@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	
+	<ui:define name="conteudo">
+
+		<h:form id="formListagem">
+
+			<p:panel id="panel1" header="Cadastro de Médicos">
+
+				<p:commandButton 
+					value="Novo" 
+					actionListener="#{medicoBean.novo}"
+					update=" :formCadastro:panelCadastro" 
+					icon="fa fa-plus"
+					oncomplete="PF('dialogo').show();">
+
+					<f:actionListener
+						type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+				</p:commandButton>
+
+			</p:panel>
+			
+			
+			<p:panel id="paneltable" header="Lista de médicos cadastrados" style="margin-top: 20px;">
+				
+				<p:dataTable id="tabela" value="#{medicoBean.medicos}" var="medico"
+				emptyMessage="Nenhum registro encontrado.">
+				
+					<p:column headerText="ID" styleClass="campoid">
+						<h:outputText value="#{medico.id}" />
+					</p:column>
+
+					<p:column headerText="Nome">
+						<h:outputText value="#{medico.nome}" />
+					</p:column>
+					
+					<p:column headerText="CPF">
+						<h:outputText value="#{medico.cpf}" />
+					</p:column>
+					
+					<p:column headerText="Email">
+						<h:outputText value="#{medico.email}" />
+					</p:column>
+					
+					<p:column headerText="Celular">
+						<h:outputText value="#{medico.celular}" />
+					</p:column>
+					
+					<p:column headerText="Opções">
+						<p:commandButton 
+							styleClass="campoEditar"
+							icon="fa fa-pencil-square-o"
+							actionListener="#{medicoBean.editar}"
+							update=":formCadastro:panelCadastro"
+							oncomplete="PF('dialogo').show();"
+							title="Atualizar">
+						
+							<f:attribute name="objetoSelecionado" value="#{medico}" />
+							<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						
+						</p:commandButton>
+						
+						<p:commandButton 
+							styleClass="excluir" 
+							icon="fa fa-trash-o"
+							actionListener="#{medicoBean.excluir}"
+							update=":mensagem :formListagem:tabela"
+							title="Excluir">
+							
+							<p:confirm header="Confirmar exclusão" 
+							message="Deseja excluir o registro selecionado?"
+							icon="fa fa-warning"/>
+							
+							<f:attribute name="objetoSelecionado" value="#{medico}" />
+						
+						</p:commandButton>
+						
+						<p:commandButton styleClass="campoImpressao"
+							icon="fa fa-print"
+							title="Imprimir">
+						
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+				<!-- CAIXA DE DIÁLOGO -->
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+				</p:confirmDialog>
+
+			</p:panel>
+
+		</h:form>
+
+		<p:dialog header="Cadastrar Médico" widgetVar="dialogo"
+			draggable="false" resizable="false" global="true" closable="true"
+			height="430" position="400,55" minimizable="true" closeOnEscape="true" positionType="fixed">
+			
+			
+			<h:form id="formCadastro">
+				
+				<h:outputText value="Os campos com (*) são obrigatórios." style="color: red; font-weight: bold"/>
+				<p:separator/>
+			
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelCadastro">
+					<h:outputLabel for="nome" value="Nome:*"/>
+					<p:inputText id="nome" 
+					value="#{medicoBean.medico.nome}"
+					maxlength="50" size="30"
+					required="true" requiredMessage="O campo 'Nome' é obrigatório!"/>
+					
+					<h:outputLabel for="sobrenome" value="Sobrenome:*"/>
+					<p:inputText id="sobrenome" 
+					maxlength="100" size="50"
+					value="#{medicoBean.medico.sobreNome}"
+					required="true" requiredMessage="O campo 'Sobrenome' é obrigatório!"/>
+					
+					<h:outputLabel for="crm" value="CRM:*"/>
+					<p:inputMask id="crm" mask="9999/aa"
+					value="#{medicoBean.medico.crm}" 
+					maxlength="10" size="10"
+					required="true" requiredMessage="O campo 'RG' é obrigatório!"/>
+					
+					<h:outputLabel for="cpf" value="CPF:*"/>
+					<p:inputMask id="cpf" maxlength="13" size="20" mask="999.999.999-99"
+					value="#{medicoBean.medico.cpf}"
+					required="true" requiredMessage="O campo 'CPF' é obrigatório" />
+					
+					<h:outputLabel for="rg" value="RG:*"/>
+					<p:inputText id="rg"
+					value="#{medicoBean.medico.rg}" 
+					maxlength="10" size="10"
+					required="true" requiredMessage="O campo 'RG' é obrigatório!"/>
+					
+					<h:outputLabel for="oe" value="Orgão Emissor:*" />
+					<p:selectOneMenu id="oe" filter="true" style="font-weight: bold"
+						value="#{medicoBean.medico.orgaoExpeditor}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Orgão Emissor' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione um orgão emissor" />
+						<f:selectItems value="#{medicoBean.orgaoExpeditores}" var="orgaoExpeditor"
+							itemValue="#{orgaoExpeditor}" 
+							itemLabel="#{orgaoExpeditor.descricao} - #{orgaoExpeditor.sigla}"/>
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="dataNascimento" value="Data de Nascimento:*" />
+					<p:calendar id="dataNascimento"
+					mode="popup"
+					navigator="true"
+					showButtonPanel="true"
+					value="#{medicoBean.medico.dataNascimento}" 
+					required="true"
+					requiredMessage="O campo 'Data de Nascimento' é obrigatório"
+					size="10" locale="pt_BR"/>
+					
+					<h:outputLabel value="E-mail:*" />
+					<p:inputText maxlength="120" size="50" 
+					 value="#{medicoBean.medico.email}"
+					required="true" requiredMessage="O campo 'E-mail' é obrigatório" />
+					
+					<h:outputLabel for="celular"  value="Celular:*" />
+					<p:inputMask id="celular" maxlength="50" size="15" mask="(99) 9.9999-9999"
+					 value="#{medicoBean.medico.celular}"
+					required="true" requiredMessage="O campo 'Celular' é obrigatório" />
+					
+					<h:outputLabel for="telefone" value="Telefone:*" />
+					<p:inputMask id="telefone" maxlength="50" size="15" mask="(99) 9999-9999"
+					 value="#{medicoBean.medico.telefone}"
+					required="true" requiredMessage="O campo 'Telefone' é obrigatório" />
+					
+					<h:outputLabel for="endereco"  value="Endereço:*" />
+					<p:selectOneMenu id="endereco" filter="true" 
+						value="#{medicoBean.medico.endereço}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Endereço' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione um endereço" />
+						<f:selectItems value="#{medicoBean.enderecos}" var="endereco"
+							itemValue="#{endereco}" 
+							itemLabel="#{endereco.logradouro}, #{endereco.numero} - #{endereco.bairro} - #{endereco.cidade.nome}
+							- #{endereco.cidade.estado.sigla}"/>
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="especialidade" value="Especialidade:*" />
+					<p:selectOneMenu id="especialidade" filter="true" 
+						value="#{medicoBean.medico.especialidade}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Especialidade' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma especialidade" />
+						<f:selectItems value="#{medicoBean.especialidades}" var="especialidade"
+							itemValue="#{especialidade}" 
+							itemLabel="#{especialidade.descricao}"/>
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="status" value="Status:*"/>
+					<p:selectOneRadio id="status" value="#{medicoBean.medico.ativo}">
+						<f:selectItem itemLabel="Ativo" itemValue="Ativo" />
+						<f:selectItem itemLabel="Inativo" itemValue="Inativo" />
+					</p:selectOneRadio>
+				</p:panelGrid>
+				
+				<p:separator/>
+				
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Salvar" 
+						actionListener="#{medicoBean.salvar}"
+						update=":mensagem :formCadastro:panelCadastro :formListagem:tabela"
+						oncomplete="PF('dialogo').hide();" icon="fa fa-save"/>
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" icon="fa fa-remove"/>
+				</p:panelGrid>
+			</h:form>
+			
+		</p:dialog>
+		
+		<p:dialog header="Lista de médicos cadastrados" widgetVar="dlgPesquisa"
+			draggable="false" resizable="false" global="true" closable="false" dynamic="true"
+			height="430" position="245,55">
+			
+			<h:form id="form">
+				
+				
+				
+			</h:form>
+			
+		</p:dialog>
+	
+	</ui:define>
+	
+</ui:composition>

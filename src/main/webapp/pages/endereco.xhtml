@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	
+	<ui:define name="conteudo">
+
+	<h:form id="formListagem">
+		<p:panel header="Lista dos Endereços Cadastrados">
+			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado." paginator="true"
+			rows="10" value="#{enderecoBean.enderecos}" var="endereco">
+				<f:facet name="header">
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" 
+					actionListener="#{enderecoBean.novo}"
+					update=" :formCadastro:panelCadastro"
+					icon="fa fa-plus" style="font-size: 5em">
+						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</f:facet>
+
+				<p:column headerText="Código" width="80">
+					<h:outputText value="#{endereco.id}"/>
+				</p:column>
+
+				<p:column headerText="CEP" sortBy="#{endereco.cep}" filterBy="#{endereco.cep}" width="80">
+					<h:outputText value="#{endereco.cep}" />
+				</p:column>
+				
+				<p:column headerText="Logradouro" sortBy="#{endereco.logradouro}" filterBy="#{endereco.logradouro}">
+					<h:outputText value="#{endereco.logradouro}"/>
+				</p:column>
+				
+				<p:column headerText="Número" sortBy="#{endereco.numero}" filterBy="#{endereco.numero}"
+					width="80">
+					<h:outputText value="#{endereco.numero}"/>
+				</p:column>
+				
+				<p:column headerText="Bairro" sortBy="#{endereco.bairro}" filterBy="#{endereco.bairro}">
+					<h:outputText value="#{endereco.bairro}"/>
+				</p:column>
+				
+				<p:column headerText="Cidade" width="180" 
+					sortBy="#{endereco.cidade.nome}" filterBy="#{endereco.cidade.nome}">
+					<h:outputText value="#{endereco.cidade.nome}"/>
+					<h:outputText value=" - "/>
+					<h:outputText value="#{endereco.cidade.estado.sigla}"/>
+				</p:column>
+
+				<p:column headerText="Opções" width="250">
+					<p:commandButton icon="fa fa-trash-o" value="Excluir"
+						actionListener="#{enderecoBean.excluir}"
+						update=":mensagem :formListagem:tabela">
+						<p:confirm header="Confirmação de exclusão" message="Deseja excluir o endereço selecionado?"
+							icon="ui-icon-alert" />
+						<f:attribute name="enderecoSelecionado" value="#{endereco}" />
+					</p:commandButton>
+					
+					<p:commandButton icon="fa fa-pencil-square-o" value="Atualizar"
+						actionListener="#{enderecoBean.editar}"
+						update=":mensagem :formCadastro:panelCadastro"
+						oncomplete="PF('dialogo').show();">
+						<f:attribute name="enderecoSelecionado" value="#{endereco}" />
+						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			
+			<!-- CAIXA DE DIÁLOGO -->
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+			</p:confirmDialog>
+			
+		</p:panel>
+	</h:form>
+
+	<p:dialog header="Endereço - Cadastro" widgetVar="dialogo"
+		draggable="false" resizable="false" global="true" closable="false">
+		
+		<h:form id="formCadastro">
+			
+			<h:outputText value="Os campos com (*) são obrigatórios." style="color: red; font-weight: bold"/>
+			<p:separator/>
+		
+			<p:panelGrid id="panelCadastro" columns="2" styleClass="ui-panelgrid-blank">
+				<p:outputLabel value="CEP:*"/>
+				<p:inputMask mask="99.999-999" maxlength="8" size="11" value="#{enderecoBean.endereco.cep}" required="true"
+				requiredMessage="O campo 'CEP' é obrigatório"/>
+			
+				<p:outputLabel value="Logradouro:*"/>
+				<p:inputText maxlength="120" size="60" value="#{enderecoBean.endereco.logradouro}" required="true"
+				requiredMessage="O campo 'Logradouro' é obrigatório"/>
+				
+				<p:outputLabel value="Número:*"/>
+				<p:inputText maxlength="50" size="20" value="#{enderecoBean.endereco.numero}" required="true"
+				requiredMessage="O campo 'Número' é obrigatório"/>
+				
+				<p:outputLabel value="Bairro:*"/>
+				<p:inputText maxlength="30" size="35" value="#{enderecoBean.endereco.bairro}" required="true"
+				requiredMessage="O campo 'Bairro' é obrigatório"/>
+				
+				<p:outputLabel value="Cidade:*"/>
+				<p:selectOneMenu id="cidade" filter="true" value="#{enderecoBean.endereco.cidade}"
+					converter="omnifaces.SelectItemsConverter"
+					required="true" requiredMessage="O campo 'Cidade' é obrigatório">
+					
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione uma cidade" />
+					<f:selectItems value="#{enderecoBean.cidades}" var="cidade"
+						itemValue="#{cidade}" itemLabel="#{cidade.nome} - #{cidade.estado.sigla}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Complemento:*"/>
+				<p:inputText maxlength="100" size="50" value="#{enderecoBean.endereco.complemento}" 
+				required="true" 
+				requiredMessage="O campo 'Complemento' é obrigatório"/>
+			</p:panelGrid>
+			
+			<p:separator/>
+			
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+				<p:commandButton value="Salvar" actionListener="#{enderecoBean.salvar}"
+				update=":mensagem :formCadastro:panelCadastro :formListagem:tabela" 
+					oncomplete="PF('dialogo').hide();" icon="fa fa-save"/>
+				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" icon="fa fa-remove"/>
+			</p:panelGrid>
+		</h:form>
+	
+	</p:dialog>
+	
+	</ui:define>
+</ui:composition>

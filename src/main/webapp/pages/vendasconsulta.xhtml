@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<h:form id="formPesquisa">
+			<p:panel header="Consulta de Vendas">
+			
+				<h:outputText value="Os campos com (*) são obrigatórios." style="color: red; font-weight: bold"/>
+				<p:separator/>
+
+				<p:panelGrid columns="3" styleClass="ui-panelgrid-blank" id="panelIdDados">
+					<p:outputLabel for="codigo" value="Código: " style="font-weight: bold"/>
+					<p:inputText id="codigo" value="#{vendaPesquisaBean.venda.id}" 
+					required="true" 
+					requiredMessage="O preenchimento do campo código é obrigatório!" 
+					style="font-weight: bold; color: red"
+					maxlength="5" size="10"/>
+					
+					<p:commandButton value="Buscar" icon="fa fa-search" style="margin: 0 0.1rem" 
+					actionListener="#{vendaPesquisaBean.buscar}"
+					update=":mensagem :formPesquisa:paneldados"
+					process="@this :formPesquisa:codigo"/>
+				</p:panelGrid>
+
+				<h:panelGroup layout="block" id="paneldados">
+					<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" 
+						rendered="#{vendaPesquisaBean.exibir}">
+						
+						<p:outputLabel value="Cliente: " style="font-weight: bold"/>
+						<h:outputText value="#{vendaPesquisaBean.venda.cliente.pessoa.nome}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/> 
+	
+						<p:outputLabel value="CPF Cliente: " style="font-weight: bold"/>
+						<h:outputText value="#{vendaPesquisaBean.venda.cliente.pessoa.cpf}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Data/Hora da Venda: " style="font-weight: bold"/>
+						<h:outputText value="#{vendaPesquisaBean.venda.horario}" 
+						style="font-weight: bold; color: red; text-transform: uppercase">
+							<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy - HH:mm:ss" timeZone="GMT-3"/>
+						</h:outputText>
+						
+						<p:outputLabel value="Usuário: " style="font-weight: bold"/>
+						<h:outputText value="#{vendaPesquisaBean.venda.usuario.pessoa.nome}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Funcionário: " style="font-weight: bold"/>
+						<h:outputText value="#{vendaPesquisaBean.venda.funcionario.pessoa.nome}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Preço R$: " style="font-weight: bold"/>
+						<h:outputText value="#{vendaPesquisaBean.venda.precoTotal}" 
+						style="font-weight: bold; color: red; text-transform: uppercase">
+							<f:convertNumber pattern="#,##0.00" minFractionDigits="2"  />
+						</h:outputText>
+	
+					</p:panelGrid>
+					
+						<p:dataTable value="#{vendaPesquisaBean.itensvendas}" var="item" rendered="#{vendaPesquisaBean.exibir}">
+							<f:facet name="header">
+								Itens da Venda
+							</f:facet>
+							
+							<p:column>
+								<h:outputText value="#{item.id}" />
+							</p:column>
+							
+							<p:column>
+								<h:outputText value="#{item.produto.descricao}" />
+							</p:column>
+						</p:dataTable>
+						
+					<p:panelGrid columns="4" rendered="#{vendaPesquisaBean.exibir}" styleClass="ui-panelgrid-blank">
+					
+						<!-- 
+						<p:commandButton value="Salvar" icon="fa fa-save"
+							actionListener="#{produtoPesquisaBean.salvar}" update=":mensagem" />
+
+						<p:commandButton value="Nova Observação"
+							actionListener="#{produtoPesquisaBean.limparCampo}"
+							update=" :formPesquisa:obs" icon="fa fa-plus"
+							style="font-size: 5em">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+						 -->
+						<p:commandButton value="Nova Consulta"
+							actionListener="#{vendaPesquisaBean.novaBusca}"
+							update=":formPesquisa:panelIdDados :formPesquisa:paneldados" icon="fa fa-repeat"
+							style="font-size: 5em">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+						
+						<p:commandButton value="Imprimir" icon="fa fa-print"
+							 update=":mensagem" />
+							
+					</p:panelGrid>
+				</h:panelGroup>
+
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

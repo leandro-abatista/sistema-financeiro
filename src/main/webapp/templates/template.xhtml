@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:insert name="metadata" />
+
+<h:head>
+	<link rel="icon" href="/resources/images/favicon-48x48.ico" type="images/icon"/>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputScript library="javascript" name="scripts.js" />
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars" name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+	
+	<title>Sistema Financeiro</title>
+</h:head>
+<h:body>
+
+	<p:growl id="mensagem"/>
+
+	<p:layout fullPage="true">
+
+		<p:layoutUnit position="north" minSize="50">
+           <h:outputText 
+			value="Bem Vindo: #{autenticacaoBean.usuarioLogado.pessoa.nome}" 
+			style="font-widht: bold; font-size: 20px; color: red; text-transform: uppercase"/>
+        </p:layoutUnit>
+
+		<p:layoutUnit position="west" size="210" resizable="false"
+			closable="false" collapsible="false">
+
+			<h:form>
+				<p:panelMenu>
+					<p:submenu label="Arquivo">
+						<p:menuitem value="Principal" outcome="/pages/principal.xhtml" icon="fa fa-home"/>
+					</p:submenu>
+
+					<p:submenu label="Cadastro" rendered="#{autenticacaoBean.temPermissao(['A','G'])}">
+						<p:menuitem value="Estado" outcome="/pages/estado.xhtml" />
+						<p:menuitem value="Cidade" outcome="/pages/cidade.xhtml" />
+						<p:menuitem value="Endereço" outcome="/pages/endereco.xhtml" />
+						<p:menuitem value="Pessoa" outcome="/pages/pessoa.xhtml" />
+						<p:menuitem value="Cliente" outcome="/pages/cliente.xhtml" icon="fa fa-group"/>
+						<p:menuitem value="Funcionário" outcome="/pages/funcionario.xhtml" />
+						<p:menuitem value="Usuário" outcome="/pages/usuario.xhtml" icon="fa fa-user"/>
+						<p:menuitem value="Fornecedor" outcome="/pages/fornecedor.xhtml" icon="fa fa-building"/>
+						<p:menuitem value="Produto" outcome="/pages/produto.xhtml" icon="fa fa-cube"/>
+						<p:menuitem value="Cartão" outcome="/pages/formapag.xhtml" icon="fa fa-cc"/>
+						<p:menuitem value="Médico" outcome="/pages/medico.xhtml" icon="fa fa-stethoscope"/>
+						<p:menuitem value="Especialidade" outcome="/pages/especialidade.xhtml"/>
+					</p:submenu>
+					
+					<p:submenu label="Estoque">
+						<p:menuitem value="Est. produtos" outcome="/pages/estoque.xhtml" icon="fa fa-cubes"/>
+					</p:submenu>
+
+					<p:submenu label="Vendas">
+						<p:menuitem value="Nova Venda" outcome="/pages/venda.xhtml" icon="fa fa-shopping-cart"/>
+					</p:submenu>
+					
+					<p:submenu label="Consultas">
+						<p:menuitem value="Produtos" outcome="/pages/produtosconsulta.xhtml" icon="fa fa-cubes"/>
+						<p:menuitem value="Vendas" outcome="/pages/vendasconsulta.xhtml" icon="fa fa-shopping-cart"/>
+					</p:submenu>
+					
+					<p:submenu label="Risco Cirúrgico">
+						<p:menuitem value="Avaliação RC" outcome="/pages/riscocirurgico.xhtml" icon="fa fa-heartbeat"/>
+					</p:submenu>
+
+					<p:submenu label="Ajuda">
+
+					</p:submenu>
+
+					<p:submenu label="Sair">
+						<p:menuitem value="Sair do Sistema" update=":mensagem" icon="fa fa-sign-out"
+						actionListener="#{autenticacaoBean.logout}"/>
+					</p:submenu>
+				</p:panelMenu>
+			</h:form>
+
+		</p:layoutUnit>
+		
+		
+		<p:layoutUnit position="center" resizable="false" closable="false" collapsible="false">
+
+			<ui:insert name="conteudo" />
+
+		</p:layoutUnit>
+		
+		<p:layoutUnit position="south"
+			header="Desenvolvido por Leandro Amorim" resizable="false"
+			closable="false" collapsible="false">
+			
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/templates/template.xhtml">
+	<!-- esta página já estar herdando todo o layout do template.xhtml -->
+	<ui:define name="conteudo">
+
+		<h:form>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+						<div class="card-body">
+							<p:graphicImage library="images" name="clientes.png" style="width: 100px"/>
+							<p:commandButton  value="Clientes"
+							style="padding: 15px; margin-left: 0.2rem"
+							action="#{clienteBean.redirecionaClientes}"/>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-6">
+					<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+						<div class="card-body">
+							<p:graphicImage library="images" name="produtos.jpg" style="width: 100px"/>
+							<p:commandButton  value="Produtos"
+							style="padding: 15px; margin-left: 0.2rem"
+							action="#{produtoBean.redirecionaProdutos}"/>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<p:separator />
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

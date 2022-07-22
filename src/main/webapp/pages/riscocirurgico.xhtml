@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	
+	<ui:define name="conteudo">
+
+	<h:form id="formListagem">
+	
+		<p:panel header="Criar uma nova avaliação de risco">
+			<p:commandButton 
+					value="Novo" 
+					actionListener="#{rcBean.novo}" 
+					update=" :formCadastro:panelCadastro
+							:formCadastro:panelCadastro1
+							:formCadastro:panelCadastro2
+							:formCadastro:panelCadastro3
+							:formCadastro:panelCadastro4
+							:formCadastro:panelCadastro5
+							:formCadastro:panelCadastro6
+							:formCadastro:panelCadastro7
+							:formCadastro:panelCadastro8"
+					icon="fa fa-plus"
+					oncomplete="PF('dialogo').show();">
+
+					<f:actionListener
+						type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+				</p:commandButton>
+		</p:panel>
+	
+	</h:form>
+		
+	<p:dialog header="Avaliação de Risco Cirúrgico" widgetVar="dialogo"
+			draggable="false" resizable="false" global="true" closable="true"
+			height="430" position="220,55" minimizable="true" closeOnEscape="true" positionType="fixed">
+			
+			
+		<h:form id="formCadastro">
+			
+			<p:panel header="IDENTIFICAÇÃO DO PACIENTE" id="panelidentificacao">
+		
+				<h:outputText value="Os campos com (*) são obrigatórios." style="color: red; font-weight: bold"/>
+				<p:separator/>
+				
+				<p:panelGrid columns="4" styleClass="ui-panelgrid-blank" id="panelCadastro">
+				
+					<h:outputLabel for="nome" value="Nome:*" />
+					<p:inputText 
+						id="nome" 
+						value="#{rcBean.riscoCirurgico.nome}"
+						maxlength="50" 
+						size="50" 
+						required="true"
+						requiredMessage="O campo 'Nome' é obrigatório!" />
+
+					<h:outputLabel for="dataNascimento" value="Data de Nascimento:*" />
+					<p:calendar 
+						id="dataNascimento" 
+						mode="popup" 
+						navigator="true"
+						showButtonPanel="true" 
+						value="#{rcBean.riscoCirurgico.dataNascimento}"
+						required="true"
+						requiredMessage="O campo 'Data de Nascimento' é obrigatório"
+						size="10" 
+						locale="pt_BR" />
+						
+					<h:outputLabel for="idade" value="Idade:*" />
+					<p:inputText 
+						id="idade" 
+						value="#{rcBean.riscoCirurgico.idade}"
+						maxlength="5" 
+						size="10" 
+						required="true"
+						requiredMessage="O campo 'Idade' é obrigatório!" />
+					
+					<h:outputLabel for="sexo" value="Sexo:*" />
+					<p:selectOneMenu id="sexo" value="#{rcBean.riscoCirurgico.sexo}">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione o sexo" />
+						<f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+						<f:selectItem itemLabel="Feminino" itemValue="Feminino" />
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="solicitante" value="Médico Solicitante:*" />
+					<p:selectOneMenu id="solicitante"
+						filter="true" 
+						value="#{rcBean.riscoCirurgico.medico}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Médico Solicitante' é obrigatório">
+						
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione um médico" />
+						<f:selectItems 
+							value="#{rcBean.medicos}" 
+							var="medico"
+							itemValue="#{medico}" 
+							itemLabel="#{medico.nome} #{medico.sobreNome}"/>
+					</p:selectOneMenu>
+
+				</p:panelGrid>
+
+			</p:panel>	
+			
+			<p:panel header="ENDEREÇO DO PACIENTE" id="panelendereco">
+					
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelCadastro1">
+				
+					<h:outputLabel for="endereco" value="Endereço:" />
+					<p:selectOneMenu 
+						id="endereco"
+						filter="true" 
+						value="#{rcBean.riscoCirurgico.endereço}"
+						converter="omnifaces.SelectItemsConverter" 
+						required="true"
+						requiredMessage="O campo 'Endereço' é obrigatório">
+						
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione um endereço" />
+						<f:selectItems 
+							value="#{rcBean.enderecos}" 
+							var="endereco"
+							itemValue="#{endereco}" 
+							itemLabel="#{endereco.logradouro}, #{endereco.numero} - #{endereco.bairro} - #{endereco.cidade.nome}
+							- #{endereco.cidade.estado.sigla}"/>
+							
+					</p:selectOneMenu>						
+				</p:panelGrid>
+			
+			</p:panel>
+			
+			<p:panel header="ANTECEDENTES PESSOAIS" id="panelap">
+					
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelCadastro2">
+					<p:selectBooleanCheckbox itemLabel="HAS"/>
+					<p:selectBooleanCheckbox itemLabel="ASMA BRÔNQUICA"/>
+					<p:selectBooleanCheckbox itemLabel="ALERGIA MEDICAMENTOSA"/>
+					<p:selectBooleanCheckbox itemLabel="DIABETES MELLITUS"/>
+					<p:selectBooleanCheckbox itemLabel="DPOC"/>
+					<p:selectBooleanCheckbox itemLabel="TABAGISMO"/>
+					<p:selectBooleanCheckbox itemLabel="INTERCORRÊNCIA ANESTÉSICA"/>
+				</p:panelGrid>
+
+			</p:panel>
+			
+			<p:panel header="EXAME FÍSICO" id="panelef">
+					
+				<p:panelGrid columns="4" styleClass="ui-panelgrid-blank" id="panelCadastro3">
+				
+					<h:outputLabel for="eg" value="Estado Geral:*" />
+					<p:selectOneMenu id="eg" filter="true" style="font-weight: bold"
+						
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Estado Geral' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione o Estado Geral" />
+						<f:selectItem itemLabel="Bom" itemValue="Bom" />
+						<f:selectItem itemLabel="Regular" itemValue="Regular" />
+						<f:selectItem itemLabel="Satisfatório" itemValue="Satisfatório" />
+						<f:selectItem itemLabel="Ruim" itemValue="Ruim" />
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="pm" value="Pele e Mucosas:*" />
+					<p:selectOneMenu id="pm" filter="true" style="font-weight: bold"
+						
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Pele e Mucosas' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione Pele e Mucosas" />
+						<f:selectItem itemLabel="Bem Coradas" itemValue="Bem Coradas" />
+						<f:selectItem itemLabel="Descoradas" itemValue="Descoradas" />
+						<f:selectItem itemLabel="Ictérias" itemValue="Ictérias" />
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="ar" value="AR:*" />
+					<p:selectOneMenu id="ar" filter="true" style="font-weight: bold"
+						converter="omnifaces.SelectItemsConverter" 
+						required="true"
+						requiredMessage="O campo 'AR' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione AR" />
+						<f:selectItem itemLabel="MV e FTV Normais- Ausência de Ruídos Adventícios" itemValue="MV e FTV Normais- Ausência de Ruídos Adventícios"/>
+						<f:selectItem itemLabel="MV e FTV menor nas Bases - Roncos por ambos HT" itemValue="MV e FTV menor nas Bases - Roncos por ambos HT"/>
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="acv" value="ACV:*" />
+					<p:selectOneMenu id="acv" filter="true" style="font-weight: bold"
+						converter="omnifaces.SelectItemsConverter" 
+						required="true"
+						requiredMessage="O campo 'ACV' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione ACV" />
+						<f:selectItem itemLabel="Bulhas Ritmicas Normofonéticas - Ausência de sopros" itemValue="Bulhas Ritmicas Normofonéticas - Ausência de sopros"/>
+						<f:selectItem itemLabel="Bulhas Ritmicas Taquicárdicas - Ausência de sopros" itemValue="Bulhas Ritmicas Taquicárdicas - Ausência de sopros"/>
+						<f:selectItem itemLabel="Bulha Arritmicas Hipofonéticas - SSFFM +" itemValue="Bulha Arritmicas Hipofonéticas - SSFFM +"/>
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="ta" value="TA:*" />
+					<p:selectOneMenu id="ta" filter="true" 
+						converter="omnifaces.SelectItemsConverter" 
+						required="true"
+						requiredMessage="O campo 'TA' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione TA" />
+						<f:selectItem itemLabel="120.80" itemValue="120.80"/>
+						<f:selectItem itemLabel="110.70" itemValue="110.70"/>
+						<f:selectItem itemLabel="140.80" itemValue="140.80"/>
+						<f:selectItem itemLabel="150.90" itemValue="150.90"/>
+						<f:selectItem itemLabel="90.60" itemValue="90.60"/>
+					</p:selectOneMenu>
+				</p:panelGrid>
+
+			</p:panel>
+			
+			<p:panel header="EXAME HEMATOLÓGICOS" id="paneleh">
+					
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelCadastro4">
+					<h:outputLabel for="eh" value="Exame Hematológico:*" />
+					<p:inputText 
+						id="eh" 
+						value="#{rcBean.riscoCirurgico.exameHematologico}"
+						maxlength="100" 
+						size="60" 
+						required="true"
+						requiredMessage="O campo 'Exame Hematológico' é obrigatório!" />
+						
+					<h:outputLabel for="raiox" value="Raio X de Tórax:*" />
+					<p:selectOneMenu id="raiox" filter="true" 
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Raio X de Tórax' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione Raio X de Tórax" />
+						<f:selectItem itemLabel="Não Realizado" itemValue="Não Realizado"/>
+						<f:selectItem itemLabel="Normal" itemValue="Normal"/>
+						<f:selectItem itemLabel="Aumento da Área Cardíaca" itemValue="Aumento da Área Cardíaca"/>
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="ecocardiograma" value="Ecocardiograma:*" />
+					<p:selectOneMenu id="ecocardiograma" filter="true" 
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Ecocardiograma' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione Ecocardiograma" />
+						<f:selectItem itemLabel="Normal" itemValue="Normal"/>
+						<f:selectItem itemLabel="Hipertrofia Concêntrica de Ventrículo Esquerdo" itemValue="Hipertrofia Concêntrica de Ventrículo Esquerdo"/>
+						<f:selectItem itemLabel="Não Realizado" itemValue="Não Realizado"/>
+						<f:selectItem itemLabel="Hipocinesia de Parede Inferior" itemValue="Hipocinesia de Parede Inferior"/>
+					</p:selectOneMenu>
+					<h:outputLabel for="eletrocardiograma" value="Eletrocardiograma:*" />
+					<p:selectOneMenu id="eletrocardiograma" filter="true" 
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Eletrocardiograma' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione Eletrocardiograma" />
+						<f:selectItem itemLabel="ECG Dentro dos Parâmetros Normais" itemValue="ECG Dentro dos Parâmetros Normais"/>
+						<f:selectItem itemLabel="Bloqueio Divisional Ântero Superior (sem repercussão hemodinâmica)" itemValue="Bloqueio Divisional Ântero Superior (sem repercussão hemodinâmica)"/>
+						<f:selectItem itemLabel="Bloqueio de Ramo Direito de 3º Grau (sem repercussão hemodinâmica)" itemValue="Bloqueio de Ramo Direito de 3º Grau (sem repercussão hemodinâmica)"/>
+						<f:selectItem itemLabel="Hipertrofia Ventricular Esquerda" itemValue="Hipertrofia Ventricular Esquerda"/>
+						<f:selectItem itemLabel="Baixa Voltagem nas Derivações Periféricas" itemValue="Baixa Voltagem nas Derivações Periféricas"/>
+						<f:selectItem itemLabel="Alterações Inespecíficas na Repolarização Ventricular" itemValue="Alterações Inespecíficas na Repolarização Ventricular"/>
+					</p:selectOneMenu>
+					
+				</p:panelGrid>
+				
+			</p:panel>
+			
+			<p:panel header="ÍNDICE DE GOLDMAN" id="panelig">
+			
+				<p:fieldset>
+					<p id="igparagrafo">O IAM MENOR QUE 6 MESES = 10 PONTOS. IAM MAIOR QUE 6 MESES = 5 PONTOS. ANGINA TIPO III = 10 PONTOS.
+					ANGINA TIPO IV = 20 PONTOS. ANGINA PECTORIS - 6 MESES = 10 PONTOS. ANTC. EAP = 5 PONTOS EAP MENOR QUE 1 SEMANA = 10 PONTOS. 
+					EST. AÓRTICA CRÍTICA = 20 PONTOS. 
+					PA02 MENOR QUE 60 PACO2 MAIORQUE 50mmHG K MENOR QUE 3 OU HCO3 MENOR QUE 20 mEq.l 
+					URÉIA MAIOR QUE 50 CREATINA MAIOR QUE 3 mg.dl 5 PONTOS OU FA/ ESV = 5 PONTOS. 
+					ESV(+ DE 5/min) = 5 PONTOS. ESV (MENOR DE 5/min) = 5 PONTOS. EMERGÊNCIA = 10 PONTOS.</p>
+				</p:fieldset>
+					
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelCadastro5">
+
+					<p:outputLabel for="ig" value="Índice de Goldman:" />
+					<p:selectOneRadio id="ig" unselectable="true">
+						<f:selectItem itemLabel="Risco I (Leve): 0 a 5 pontos" itemValue="Risco I (Leve): 0 a 5 pontos" />
+						<f:selectItem itemLabel="Risco II (Pequeno): de 6 a 12 pontos" itemValue="Risco II (Pequeno): de 6 a 12 pontos" />
+						<f:selectItem itemLabel="Risco III (Médio): de 13 a 25 pontos" itemValue="Risco III (Médio): de 13 a 25 pontos" />
+						<f:selectItem itemLabel="Risco IV (Grande): > 26 pontos" itemValue="Risco IV (Grande): > 26 pontos" />
+					</p:selectOneRadio>
+
+				</p:panelGrid>
+				
+				<p:separator/>
+				
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelCadastro6">
+				
+					<h:outputLabel for="tabelaasa" value="Tabela ASA:*" />
+					<p:selectOneMenu id="tabelaasa" filter="true" style="font-weight: bold"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Tabela ASA' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione Tabela ASA" />
+						<f:selectItem itemLabel="Normalmente Saudável" itemValue="Normalmente Saudável" />
+						<f:selectItem itemLabel="Doença Sistêmica Leve" itemValue="Doença Sistêmica Leve" />
+						<f:selectItem itemLabel="Doença Sistêmica Moderada" itemValue="Doença Sistêmica Moderada" />
+						<f:selectItem itemLabel="Doença Sistêmica Severa" itemValue="Doença Sistêmica Severa" />
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="tabelanyha" value="Tabela NYHA:*" />
+					<p:selectOneMenu id="tabelanyha" filter="true" style="font-weight: bold"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Tabela NYHA' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione Tabela NYHA" />
+						<f:selectItem itemLabel="Ausência de Sintomas" itemValue="Ausência de Sintomas" />
+						<f:selectItem itemLabel="Sintomas de Leve Intensidade" itemValue="Sintomas de Leve Intensidade" />
+						<f:selectItem itemLabel="Sintomas de Moderada Intensidade" itemValue="Sintomas de Moderada Intensidade" />
+						<f:selectItem itemLabel="Sintomas de Severa Intensidade" itemValue="Sintomas de Severa Intensidade" />
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="criterioslee" value="Critérios de LEE:*" />
+					<p:selectOneMenu id="criterioslee" filter="true" 
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Critérios de LEE' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione Critérios de LEE" />
+						<f:selectItem itemLabel="Cirúrgia de Baixo Risco" itemValue="Cirúrgia de Baixo Risco" />
+						<f:selectItem itemLabel="Cirúrgia de Médio Risco" itemValue="Cirúrgia de Médio Risco" />
+						<f:selectItem itemLabel="Cirúrgia de Alto Risco" itemValue="Cirúrgia de Alto Risco" />
+					</p:selectOneMenu>
+					
+				</p:panelGrid>
+				
+				<p:separator/>
+				
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelCadastro7">
+				
+					<h:outputLabel for="riscocirurgicograu" value="Risco Cirúrgico Grau:*" />
+					<p:selectOneMenu id="riscocirurgicograu" filter="true" 
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Risco Cirúrgico Grau' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione Risco Cirúrgico Grau" />
+						<f:selectItem itemLabel="I" itemValue="I" />
+						<f:selectItem itemLabel="I/II" itemValue="I/II" />
+						<f:selectItem itemLabel="II" itemValue="II" />
+						<f:selectItem itemLabel="II/III" itemValue="II/III" />
+					</p:selectOneMenu>
+					
+					<h:outputLabel for="paciente" value="Paciente:*" />
+					<p:selectOneMenu id="paciente" filter="true"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Paciente' é obrigatório">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione Paciente" />
+						<f:selectItem itemLabel="Apto" itemValue="Apto" />
+						<f:selectItem itemLabel="Não-Apto" itemValue="Não-Apto" />
+						<f:selectItem itemLabel="Apta" itemValue="Apta" />
+						<f:selectItem itemLabel="Não-Apto" itemValue="Não-Apta" />
+					</p:selectOneMenu>
+					
+				</p:panelGrid>
+				
+				<p:separator/>
+				
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelCadastro8">
+						<h:outputLabel for="observacao" value="Observação:*" />
+						<p:inputTextarea id="observacao" rows="3" cols="100" maxlength="255"
+							placeholder="Insira uma observação com 255 caracteres"
+							value="#{rcBean.riscoCirurgico.observacao}">
+						
+						</p:inputTextarea>		
+				</p:panelGrid>
+				
+				<p:separator/>
+				
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Salvar" 
+						
+						oncomplete="PF('dialogo').hide();" icon="fa fa-save"/>
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" icon="fa fa-remove"/>
+				</p:panelGrid>
+				
+			</p:panel>		
+			
+		</h:form>
+			
+	</p:dialog>
+	
+	</ui:define>
+	
+</ui:composition>

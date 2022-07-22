@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<h:form id="formListagem">
+			<p:panel header="Lista dos Produtos Cadastrados">
+				<p:dataTable id="tbl" var="produto" value="#{produtoBean.produtos}"
+					paginator="true" rows="10" style="margin-bottom:20px">
+
+					<f:facet name="header">
+						<div style="float: right; padding-top: 5px;">
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/excel.png" width="24" />
+								<p:dataExporter type="xls" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/xlsx.png" width="24" />
+								<p:dataExporter type="xlsxstream" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/pdf.png" width="24" />
+								<p:dataExporter type="pdf" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/csv.png" width="24" />
+								<p:dataExporter type="csv" target="tbl" fileName="cars" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage name="/demo/images/xml.png" width="24" />
+								<p:dataExporter type="xml" target="tbl" fileName="cars" />
+							</h:commandLink>
+						</div>
+					</f:facet>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Código" style="text-align: center"/>
+						</f:facet>
+						<h:outputText value="#{produto.id}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Item" />
+						</f:facet>
+						<h:outputText value="#{produto.descricao}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Preço" />
+						</f:facet>
+						<h:outputText value="R$ #{produto.preco}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Quant." />
+						</f:facet>
+						<h:outputText value="#{produto.quantidade}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

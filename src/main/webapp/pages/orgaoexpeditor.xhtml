@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/template.xhtml">
+	
+	<ui:define name="conteudo">
+
+	<h:form id="formListagem">
+	
+		<p:panel header="Lista dos Orgão expeditores Cadastrados" id="paneltable">
+			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+				paginator="true" rows="10" value="#{OEBean.listaOE}" var="orgaoExpeditor">
+				
+				<f:facet name="header">
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" 
+					actionListener="#{OEBean.novo}"
+					update=" :formCadastro:panelCadastro" icon="fa fa-plus">
+						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</f:facet>
+
+				<p:column headerText="Código" width="80">
+					<h:outputText value="#{orgaoExpeditor.id}"/>
+				</p:column>
+
+				<p:column headerText="Orgão Expeditor" sortBy="#{orgaoExpeditor.descricao}" filterBy="#{orgaoExpeditor.descricao}">
+					<h:outputText value="#{orgaoExpeditor.descricao}"/>
+				</p:column>
+				
+				<p:column headerText="Sigla" sortBy="#{orgaoExpeditor.sigla}" filterBy="#{orgaoExpeditor.sigla}">
+					<h:outputText value="#{orgaoExpeditor.sigla}"/>
+				</p:column>
+
+				<p:column headerText="Opções" width="250">
+					<p:commandButton icon="fa fa-trash" value="Excluir"
+						actionListener="#{OEBean.excluir}" update=":mensagem :formListagem:tabela">
+						<p:confirm header="Confirmação de exclusão" 
+						message="Deseja excluir o OrgãoExpeditor selecionado?"
+						icon="ui-icon-alert">
+						</p:confirm>
+						<f:attribute name="oeSelecionado" value="#{orgaoExpeditor}" />
+					</p:commandButton>
+					
+					<p:commandButton icon="fa fa-edit" value="Atualizar"
+						actionListener="#{OEBean.editar}"
+						update=":formCadastro:panelCadastro"
+						oncomplete="PF('dialogo').show();">
+						<f:attribute name="oeSelecionado" value="#{orgaoExpeditor}" />
+						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			
+			<!-- CAIXA DE DIÁLOGO -->
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="fa fa-remove" />
+			</p:confirmDialog>
+			
+		</p:panel>
+	</h:form>
+
+	<p:dialog header="Orgão Expeditor - Cadastro" widgetVar="dialogo"
+		draggable="false" resizable="false" global="true" closable="false">
+		
+		<h:form id="formCadastro">
+			
+			<h:outputText value="Os campos com (*) são obrigatórios." style="color: red; font-weight: bold"/>
+			<p:separator/>
+		
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelCadastro">
+			
+				<p:outputLabel value="Descrição:*"/>
+				<p:inputText maxlength="120" size="40" value="#{OEBean.orgaoExpeditor.descricao}"
+				required="true"
+				requiredMessage="O campo 'Descrição' é obrigatório"/>
+				
+				<p:outputLabel value="Sigla:*"/>
+				<p:inputText maxlength="5" size="10" value="#{OEBean.orgaoExpeditor.sigla}"
+				required="true"
+				requiredMessage="O campo 'Descrição' é obrigatório"/>
+				
+				<p:outputLabel value="Estado Emissor:*" />
+				<p:selectOneMenu filter="true"
+					value="#{OEBean.orgaoExpeditor.estado}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					requiredMessage="O campo 'Estado Emissor' é obrigatório">
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione um estado emissor" />
+					<f:selectItems value="#{OEBean.estados}" var="estado"
+						itemValue="#{estado}" itemLabel="#{estado.sigla}" />
+				</p:selectOneMenu>
+				
+			</p:panelGrid>
+			
+			<p:separator/>
+			
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+				<p:commandButton value="Salvar" actionListener="#{OEBean.salvar}" 
+					update=":mensagem :formCadastro:panelCadastro :formListagem:tabela" 
+					oncomplete="PF('dialogo').hide();" icon="fa fa-save"/>
+				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" icon="fa fa-remove"/>
+			</p:panelGrid>
+		</h:form>
+	
+	</p:dialog>
+	
+	</ui:define>
+	
+</ui:composition>

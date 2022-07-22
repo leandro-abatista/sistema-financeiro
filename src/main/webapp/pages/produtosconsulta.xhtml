@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<h:form id="formPesquisa">
+			<p:panel header="Consulta de Produtos">
+			
+				<h:outputText value="Os campos com (*) são obrigatórios." style="color: red; font-weight: bold"/>
+				<p:separator/>
+
+				<p:panelGrid columns="3" styleClass="ui-panelgrid-blank" id="panelIdDados">
+					<p:outputLabel for="codigo" value="Código: " style="font-weight: bold"/>
+					<p:inputText id="codigo" value="#{produtoPesquisaBean.produto.id}" required="true" 
+					requiredMessage="O preenchimento do campo código é obrigatório!" 
+					style="font-weight: bold; color: red"
+					maxlength="5" size="10"/>
+					
+					<p:commandButton value="Buscar" icon="fa fa-search" style="margin: 0 0.1rem" 
+					actionListener="#{produtoPesquisaBean.buscar}"
+					update=":mensagem :formPesquisa:paneldados"
+					process="@this :formPesquisa:codigo"/>
+				</p:panelGrid>
+
+				<h:panelGroup layout="block" id="paneldados">
+					<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" 
+						rendered="#{produtoPesquisaBean.exibir}">
+						<p:outputLabel value="Descrição do Produto: " style="font-weight: bold"/>
+						<h:outputText value="#{produtoPesquisaBean.produto.descricao}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/> 
+	
+						<p:outputLabel value="Preço R$: " style="font-weight: bold"/>
+						<h:outputText value="#{produtoPesquisaBean.produto.preco}" 
+						style="font-weight: bold; color: red; text-transform: uppercase">
+							<f:convertNumber pattern="#,##0.00" minFractionDigits="2"  />
+						</h:outputText>
+	
+						<p:outputLabel value="Quantidade: " style="font-weight: bold"/>
+						<h:outputText value="#{produtoPesquisaBean.produto.quantidade}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Fornecedor: " style="font-weight: bold"/>
+						<h:outputText value="#{produtoPesquisaBean.produto.fornecedor.razaoSocial}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="CNPJ: " style="font-weight: bold"/>
+						<h:outputText value="#{produtoPesquisaBean.produto.fornecedor.cnpj}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel for="obs" value="Observações: " style="font-weight: bold"/>
+						<h:inputTextarea id="obs" rows="5" cols="50"
+						value="#{produtoPesquisaBean.historico.observacoes}"
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+					</p:panelGrid>
+
+					<p:panelGrid columns="4" rendered="#{produtoPesquisaBean.exibir}" styleClass="ui-panelgrid-blank">
+					
+						<p:commandButton value="Salvar" icon="fa fa-save"
+							actionListener="#{produtoPesquisaBean.salvar}" update=":mensagem" />
+
+						<p:commandButton value="Nova Observação"
+							actionListener="#{produtoPesquisaBean.limparCampo}"
+							update=" :formPesquisa:obs" icon="fa fa-plus"
+							style="font-size: 5em">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+						
+						<p:commandButton value="Nova Consulta"
+							actionListener="#{produtoPesquisaBean.novaBusca}"
+							update=" :formPesquisa:paneldados :formPesquisa:panelIdDados " icon="fa fa-repeat"
+							style="font-size: 5em">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+						
+						<p:commandButton value="Imprimir" icon="fa fa-print"
+							 update=":mensagem" />
+							
+					</p:panelGrid>
+				</h:panelGroup>
+				
+				<p:treeTable >
+				<f:facet name="header">
+           			 Document Viewer
+        		</f:facet>
+				<p:column headerText="Name">
+					<h:outputText  />
+				</p:column>
+				<p:column headerText="Size">
+					<h:outputText  />
+				</p:column>
+				<p:column headerText="Type">
+					<h:outputText  />
+				</p:column>
+				<p:column style="width:24px">
+					<!--  
+					<p:commandLink update=":form:documentPanel"
+						oncomplete="PF('documentDialog').show()" title="View Detail"
+						styleClass="ui-icon pi pi-search">
+						<f:setPropertyActionListener value="#{document}"
+							target="#{ttBasicView.selectedDocument}" />
+					</p:commandLink>
+					-->
+				</p:column>
+			</p:treeTable>
+
+			</p:panel>
+
+		</h:form>
+
+		<h:form id="form">
+			<p:treeTable >
+				<f:facet name="header">
+           			 Document Viewer
+        		</f:facet>
+				<p:column headerText="Name">
+					<h:outputText  />
+				</p:column>
+				<p:column headerText="Size">
+					<h:outputText  />
+				</p:column>
+				<p:column headerText="Type">
+					<h:outputText  />
+				</p:column>
+				<p:column style="width:24px">
+					<!--  
+					<p:commandLink update=":form:documentPanel"
+						oncomplete="PF('documentDialog').show()" title="View Detail"
+						styleClass="ui-icon pi pi-search">
+						<f:setPropertyActionListener value="#{document}"
+							target="#{ttBasicView.selectedDocument}" />
+					</p:commandLink>
+					-->
+				</p:column>
+			</p:treeTable>
+			
+			<!--  
+			<p:dialog id="dialog" header="Document Detail" showEffect="fade"
+				widgetVar="documentDialog" modal="true" resizable="false">
+				<p:outputPanel id="documentPanel">
+					<p:panelGrid columns="2" columnClasses="label,value"
+						rendered="#{not empty ttBasicView.selectedDocument}">
+						<h:outputLabel for="name" value="Name: " />
+						<h:outputText id="name"
+							value="#{ttBasicView.selectedDocument.name}"
+							style="font-weight:bold" />
+
+						<h:outputLabel for="size" value="Size: " />
+						<h:outputText id="size"
+							value="#{ttBasicView.selectedDocument.size}"
+							style="font-weight:bold" />
+
+						<h:outputLabel for="type" value="Type " />
+						<h:outputText id="type"
+							value="#{ttBasicView.selectedDocument.type}"
+							style="font-weight:bold" />
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+			-->
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
