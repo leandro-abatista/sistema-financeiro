@@ -57,6 +57,8 @@
 						value="#{produtoPesquisaBean.historico.observacoes}"
 						style="font-weight: bold; color: red; text-transform: uppercase"/>
 					</p:panelGrid>
+					
+					<p:separator rendered="#{produtoPesquisaBean.exibir}"/>
 
 					<p:panelGrid columns="4" rendered="#{produtoPesquisaBean.exibir}" styleClass="ui-panelgrid-blank">
 					
@@ -85,85 +87,8 @@
 					</p:panelGrid>
 				</h:panelGroup>
 				
-				<p:treeTable >
-				<f:facet name="header">
-           			 Document Viewer
-        		</f:facet>
-				<p:column headerText="Name">
-					<h:outputText  />
-				</p:column>
-				<p:column headerText="Size">
-					<h:outputText  />
-				</p:column>
-				<p:column headerText="Type">
-					<h:outputText  />
-				</p:column>
-				<p:column style="width:24px">
-					<!--  
-					<p:commandLink update=":form:documentPanel"
-						oncomplete="PF('documentDialog').show()" title="View Detail"
-						styleClass="ui-icon pi pi-search">
-						<f:setPropertyActionListener value="#{document}"
-							target="#{ttBasicView.selectedDocument}" />
-					</p:commandLink>
-					-->
-				</p:column>
-			</p:treeTable>
-
 			</p:panel>
 
-		</h:form>
-
-		<h:form id="form">
-			<p:treeTable >
-				<f:facet name="header">
-           			 Document Viewer
-        		</f:facet>
-				<p:column headerText="Name">
-					<h:outputText  />
-				</p:column>
-				<p:column headerText="Size">
-					<h:outputText  />
-				</p:column>
-				<p:column headerText="Type">
-					<h:outputText  />
-				</p:column>
-				<p:column style="width:24px">
-					<!--  
-					<p:commandLink update=":form:documentPanel"
-						oncomplete="PF('documentDialog').show()" title="View Detail"
-						styleClass="ui-icon pi pi-search">
-						<f:setPropertyActionListener value="#{document}"
-							target="#{ttBasicView.selectedDocument}" />
-					</p:commandLink>
-					-->
-				</p:column>
-			</p:treeTable>
-			
-			<!--  
-			<p:dialog id="dialog" header="Document Detail" showEffect="fade"
-				widgetVar="documentDialog" modal="true" resizable="false">
-				<p:outputPanel id="documentPanel">
-					<p:panelGrid columns="2" columnClasses="label,value"
-						rendered="#{not empty ttBasicView.selectedDocument}">
-						<h:outputLabel for="name" value="Name: " />
-						<h:outputText id="name"
-							value="#{ttBasicView.selectedDocument.name}"
-							style="font-weight:bold" />
-
-						<h:outputLabel for="size" value="Size: " />
-						<h:outputText id="size"
-							value="#{ttBasicView.selectedDocument.size}"
-							style="font-weight:bold" />
-
-						<h:outputLabel for="type" value="Type " />
-						<h:outputText id="type"
-							value="#{ttBasicView.selectedDocument.type}"
-							style="font-weight:bold" />
-					</p:panelGrid>
-				</p:outputPanel>
-			</p:dialog>
-			-->
 		</h:form>
 
 	</ui:define>

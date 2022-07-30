@@ -24,32 +24,43 @@
 	
 	<p:growl id="mensagem"/>
 	
-	<p:dialog header="Autenticação de Usuário" closable="false" draggable="false" resizable="false" global="true" 
-	visible="true" responsive="true"> 
+	<p:dialog header="Autenticação de Usuário" styleClass="dlgAutentication" closable="false" 
+		draggable="false" resizable="false" global="true" 
+		visible="true" responsive="true">
+		 
 		<h:form id="formulario">
+		
 			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
-			
-				<p:outputLabel value="CPF:"/>
-				<p:inputMask mask="999.999.999-99" required="true" 
-				requiredMessage="O campo cpf é obrigatório"
-				value="#{autenticacaoBean.usuario.pessoa.cpf}"/>
 				
-				<p:outputLabel value="Senha:"/>
-				<p:password maxlength="8" size="20" required="true"
-				requiredMessage="O campo senha é obrigatório!"
-				value="#{autenticacaoBean.usuario.senha}"/>
+				<f:facet name="autentication">
+					<h:outputText value="Preencha os campos para acesso aoa sistema" />
+				</f:facet>
+			
+				<h:outputLabel for="cpf" value="CPF:*"/>
+				<p:inputMask id="cpf" 
+					mask="999.999.999-99" 
+					required="true" 
+					requiredMessage="O campo 'CPF' é obrigatório!"
+					value="#{autenticacaoBean.usuario.pessoa.cpf}"/>
+				
+				<h:outputLabel for="senha" value="Senha:*"/>
+				<p:password id="senha" 
+					maxlength="8" 
+					size="20" 
+					required="true"
+					requiredMessage="O campo 'Senha' é obrigatório!"
+					value="#{autenticacaoBean.usuario.senha}"/>
 				
 			</p:panelGrid>
 			
 			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
 			
-				<p:commandButton value="Logar" icon="fa fa-users" 
-				update=":mensagem"
-				actionListener="#{autenticacaoBean.autenticar}"/>
-				
-				<p:commandButton value="Sair" icon="fa fa-sign-out" 
-				update=":mensagem"
-				actionListener="#{autenticacaoBean.logout}"/>
+				<p:commandButton
+					styleClass="botaoLogar" 
+					value="Logar" 
+					icon="fa fa-users" 
+					update=":mensagem"
+					actionListener="#{autenticacaoBean.autenticar}"/>
 				
 			</p:panelGrid>
 		</h:form>

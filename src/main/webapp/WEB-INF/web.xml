@@ -4,7 +4,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee  http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 	<!-- Nome da Aplicação -->
-	<display-name>Financeiro</display-name>
+	<display-name>financeiro</display-name>
+	
+	<welcome-file-list>
+		<welcome-file>pages/principal.jsf</welcome-file>
+	</welcome-file-list>
+	
 	<context-param>
 		<param-name>facelets.SKIP_COMMENTS</param-name>
 		<param-value>true</param-value>
@@ -13,7 +18,7 @@
 		<param-name>javax.faces.CONFIG_FILES</param-name>
 		<param-value>/WEB-INF/faces-config.xml</param-value>
 	</context-param>
-	<!-- Estágio do Projeto -->
+<!-- 	Estágio do Projeto -->
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
@@ -33,6 +38,16 @@
 	<listener>
 		<listener-class>br.com.financeiro.util.HibernateContexto</listener-class>
 	</listener>
+	
+	<filter>
+		<filter-name>conexaoFilter</filter-name>
+		<filter-class>br.com.financeiro.filter.FilterOpenSessionInView</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>conexaoFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	<!-- Configuração do JSF -->
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
@@ -41,6 +56,6 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.xhtml</url-pattern>
+		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
 </web-app>

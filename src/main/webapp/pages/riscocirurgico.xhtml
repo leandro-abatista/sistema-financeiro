@@ -29,19 +29,39 @@
 
 					<f:actionListener
 						type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-				</p:commandButton>
+			</p:commandButton>
+				
+			<p:commandButton 
+					value="Listar" 
+					actionListener="#{rcBean.listarRC}"
+					icon="fa fa-list"
+					oncomplete="PF('dlgListar').show();">
+
+					<f:actionListener
+						type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+			</p:commandButton>
+			
+			<p:commandButton 
+					value="Detalhar" 
+					actionListener="#{rcBean.listarRC}"
+					icon="fa fa-table"
+					oncomplete="PF('dlgDetalhar').show();">
+
+					<f:actionListener
+						type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+			</p:commandButton>
 		</p:panel>
 	
 	</h:form>
 		
 	<p:dialog header="Avaliação de Risco Cirúrgico" widgetVar="dialogo"
 			draggable="false" resizable="false" global="true" closable="true"
-			height="430" position="220,55" minimizable="true" closeOnEscape="true" positionType="fixed">
+			height="435" width="1145" position="220,55" minimizable="true" closeOnEscape="true">
 			
 			
 		<h:form id="formCadastro">
 			
-			<p:panel header="IDENTIFICAÇÃO DO PACIENTE" id="panelidentificacao">
+			<p:panel header="IDENTIFICAÇÃO DO PACIENTE" id="panelidentificacao" styleClass="panelCustom">
 		
 				<h:outputText value="Os campos com (*) são obrigatórios." style="color: red; font-weight: bold"/>
 				<p:separator/>
@@ -56,6 +76,16 @@
 						size="50" 
 						required="true"
 						requiredMessage="O campo 'Nome' é obrigatório!" />
+						
+					<h:outputLabel for="cpf" value="CPF:*" />
+					<p:inputMask
+						styleClass="inputCustom"
+						mask="999.999.999-99" 
+						id="cpf" 
+						value="#{rcBean.riscoCirurgico.cpf}"
+						maxlength="14" 
+						size="15"
+						placeholder="Ex: 000.000.000-00"/>
 
 					<h:outputLabel for="dataNascimento" value="Data de Nascimento:*" />
 					<p:calendar 
@@ -67,7 +97,8 @@
 						required="true"
 						requiredMessage="O campo 'Data de Nascimento' é obrigatório"
 						size="10" 
-						locale="pt_BR" />
+						locale="pt_BR" 
+						placeholder="00/00/0000"/>
 						
 					<h:outputLabel for="idade" value="Idade:*" />
 					<p:inputNumber
@@ -90,6 +121,7 @@
 					
 					<h:outputLabel for="celular" value="Celular:*" />
 					<p:inputMask
+						styleClass="inputCustom"
 						mask="(99) 9.9999-9999" 
 						id="celular" 
 						value="#{rcBean.riscoCirurgico.celular}"
@@ -99,11 +131,13 @@
 						
 					<h:outputLabel for="email" value="E-mail:*" />
 					<p:inputText 
+						styleClass="inputEmailCustom"
 						id="email" 
 						value="#{rcBean.riscoCirurgico.email}"
 						maxlength="50" 
-						size="50" 
+						size="40" 
 						placeholder="Ex: exemplo@exemplo.com" />
+						
 					
 					<h:outputLabel for="solicitante" value="Médico Solicitante:*" />
 					<p:selectOneMenu id="solicitante"
@@ -139,7 +173,7 @@
 
 			</p:panel>	
 			
-			<p:panel header="ENDEREÇO DO PACIENTE" id="panelendereco">
+			<p:panel header="ENDEREÇO DO PACIENTE" id="panelendereco" styleClass="panelCustom">
 					
 				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelCadastro1">
 				
@@ -164,7 +198,7 @@
 			
 			</p:panel>
 			
-			<p:panel header="ANTECEDENTES PESSOAIS" id="panelap">
+			<p:panel header="ANTECEDENTES PESSOAIS" id="panelap" styleClass="panelCustom">
 					
 				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelCadastro2">
 						
@@ -193,7 +227,7 @@
 
 			</p:panel>
 			
-			<p:panel header="EXAME FÍSICO" id="panelef">
+			<p:panel header="EXAME FÍSICO" id="panelef" styleClass="panelCustom">
 					
 				<p:panelGrid columns="4" styleClass="ui-panelgrid-blank" id="panelCadastro3">
 				
@@ -265,7 +299,7 @@
 
 			</p:panel>
 			
-			<p:panel header="EXAME HEMATOLÓGICOS" id="paneleh">
+			<p:panel header="EXAME HEMATOLÓGICOS" id="paneleh" styleClass="panelCustom">
 					
 				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelCadastro4">
 				
@@ -325,7 +359,7 @@
 				
 			</p:panel>
 			
-			<p:panel header="ÍNDICE DE GOLDMAN" id="panelig">
+			<p:panel header="ÍNDICE DE GOLDMAN" id="panelig" styleClass="panelCustom">
 			
 				<p:fieldset>
 					<p id="igparagrafo">O IAM MENOR QUE 6 MESES = 10 PONTOS. IAM MAIOR QUE 6 MESES = 5 PONTOS. ANGINA TIPO III = 10 PONTOS.
@@ -398,7 +432,7 @@
 				
 				<p:separator/>
 				
-				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelCadastro7">
+				<p:panelGrid columns="4" styleClass="ui-panelgrid-blank" id="panelCadastro7">
 				
 					<h:outputLabel for="riscocirurgicograu" value="Risco Cirúrgico Grau:*" />
 					<p:selectOneMenu id="riscocirurgicograu"
@@ -435,6 +469,7 @@
 				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelCadastro8">
 						<h:outputLabel for="observacao" value="Observação:*" />
 						<p:inputTextarea id="observacao" 
+						styleClass="inputTextAreaCustom"
 						rows="3" 
 						cols="100" 
 						maxlength="255"
@@ -468,6 +503,77 @@
 			
 	</p:dialog>
 	
+	<!-- DIALOGO DE LISTAR TODOS COM DATALIST OS RISCOS CIRÚRGICOS REALIZADOS OU CADASTRADOS NO BANCO DE DADOS -->
+		<p:dialog header="Listar" widgetVar="dlgListar" draggable="false"
+			resizable="false" global="true" closable="true" height="430"
+			position="220,55" minimizable="true" closeOnEscape="true">
+
+			<form id="formListar">
+				<p:dataList value="#{rcBean.riscosCirurgicos}" var="rc" type="ordered">
+					<f:facet name="header">
+						Lista de Avaliações de Riscos Cirúrgicos
+					</f:facet>
+					
+					<h:outputText value="PACIENTE : #{rc.nome}"
+						style="color: blue; text-transform: uppercase; font-size: 16px;" />
+						
+						|
+						
+					<h:outputText value="MÉDICO SOLIC. : #{rc.medico.nome} #{rc.medico.sobreNome}"
+						style="color: blue; text-transform: uppercase; font-size: 16px;" />
+						
+						|
+						
+					<h:outputText value="CIRURGIA REQUISITADA : #{rc.cirurgia.descricao}"
+						style="color: blue; text-transform: uppercase; font-size: 16px;" />
+						
+						|
+						
+					<h:outputText value="DATA AVALIAÇÃO : #{rc.dataAvaliacao}" style="color: blue; text-transform: uppercase; font-size: 16px;">
+						<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy" timeZone="GMT-3"/>
+					</h:outputText>
+					
+					<p:separator/>
+				</p:dataList>
+			</form>
+
+		</p:dialog>
+		
+		<!-- DIALOGO DE LISTAR COM DATATABLE -->
+		<p:dialog header="Avaliação de Risco Cirúrgico"
+			widgetVar="dlgDetalhar" draggable="false" resizable="false"
+			global="true" closable="true" height="430" position="220,55"
+			minimizable="true" closeOnEscape="true">
+
+			<h:form id="formBuscar">
+
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					value="#{rcBean.riscosCirurgicos}" var="rc">
+
+					<p:column headerText="ID" styleClass="campoid">
+						<h:outputText value="#{rc.id}" />
+					</p:column>
+
+					<p:column headerText="NOME">
+						<h:outputText value="#{rc.nome}" />
+					</p:column>
+
+					<p:column headerText="DATA AVALIAÇÃO">
+						<h:outputText value="#{rc.dataAvaliacao}">
+							<f:convertDateTime locale="pt-BR" pattern="dd/MM/yyyy HH:mm"
+								timeZone="GMT-3" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Opções">
+					</p:column>
+
+				</p:dataTable>
+
+			</h:form>
+		
+		</p:dialog>
+			
 	</ui:define>
 	
 </ui:composition>

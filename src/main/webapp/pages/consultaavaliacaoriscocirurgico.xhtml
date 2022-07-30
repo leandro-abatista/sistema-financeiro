@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<h:form id="formPesquisa">
+			<p:panel header="Pesquisa de ARC">
+			
+				<h:outputText value="Os campos com (*) são obrigatórios." style="color: red; font-weight: bold"/>
+				<p:separator/>
+
+				<p:panelGrid columns="3" styleClass="ui-panelgrid-blank" id="panelIdDados">
+					<f:facet name="Obs">
+						<h:outputText value="Pesquisar Avaliação de Risco Cirúrgico pleo Código." style="color: red; font-weight: bold"/>
+					</f:facet>
+					<p:outputLabel for="codigo" value="Código: " style="font-weight: bold"/>
+					<p:inputText id="codigo" value="#{avaRiscCirurgicoBean.riscoCirurgico.id}"
+					required="true" 
+					requiredMessage="O preenchimento do campo código é obrigatório!" 
+					style="font-weight: bold; color: red"
+					maxlength="5" size="10"/>
+					
+					<p:commandButton value="Buscar" icon="fa fa-search" style="margin: 0 0.1rem" 
+					actionListener="#{avaRiscCirurgicoBean.buscar}"
+					update=":mensagem :formPesquisa:paneldados"
+					process="@this :formPesquisa:codigo"/>
+				</p:panelGrid>
+				
+
+				<h:panelGroup layout="block" id="paneldados">
+					<p:separator rendered="#{avaRiscCirurgicoBean.exibir}"/>
+				
+					<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" rendered="#{avaRiscCirurgicoBean.exibir}">
+						
+						<p:outputLabel value="Nome do Paciente: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.nome}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/> 
+						
+						<p:outputLabel value="Sexo: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.sexo}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+	
+						<p:outputLabel value="Idade: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.idade}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Data da Nascimento: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.dataNascimento}" 
+						style="font-weight: bold; color: red; text-transform: uppercase">
+							<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy" timeZone="GMT-3"/>
+						</h:outputText>
+						
+						<p:outputLabel value="Data da Avaliação: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.dataAvaliacao}" 
+						style="font-weight: bold; color: red; text-transform: uppercase">
+							<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy - HH:mm:ss" timeZone="GMT-3"/>
+						</h:outputText>
+						
+						<p:outputLabel value="Celular: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.celular}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="E-mail: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.email}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Cirurgia: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.cirurgia.descricao}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Médico Solic.: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.medico.nome} #{avaRiscCirurgicoBean.riscoCirurgico.medico.sobreNome}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+					</p:panelGrid>
+					
+					<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" rendered="#{avaRiscCirurgicoBean.exibir}">
+						
+					</p:panelGrid>
+						
+					<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" rendered="#{avaRiscCirurgicoBean.exibir}">	
+						<p:outputLabel value="Endereço: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.endereço.logradouro} - #{avaRiscCirurgicoBean.riscoCirurgico.endereço.numero} - #{avaRiscCirurgicoBean.riscoCirurgico.endereço.bairro} - #{avaRiscCirurgicoBean.riscoCirurgico.endereço.cidade.nome} - #{avaRiscCirurgicoBean.riscoCirurgico.endereço.cidade.estado.sigla}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+					</p:panelGrid>
+					
+					<p:separator rendered="#{avaRiscCirurgicoBean.exibir}"/>
+						
+					<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" rendered="#{avaRiscCirurgicoBean.exibir}">
+						<p:outputLabel value="Medicamento em Uso: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.medicamentoEmUso}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Estado geral: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.estadoGeral}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Pele e Mucosas: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.peleMucosas}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="AR: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.ar}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="ACV: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.acv}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="TA: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.ta}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+					</p:panelGrid>
+						
+					<p:separator rendered="#{avaRiscCirurgicoBean.exibir}"/>	
+						
+					<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" rendered="#{avaRiscCirurgicoBean.exibir}">	
+						<p:outputLabel value="Exame Hematológico: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.exameHematologico}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Raio X de Tórax: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.raioXTorax}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Ecocardiograma: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.ecoCardiograma}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Eletrocardiograma: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.eletrocardiograma}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+					</p:panelGrid>
+						
+					<p:separator rendered="#{avaRiscCirurgicoBean.exibir}"/>	
+						
+					<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" rendered="#{avaRiscCirurgicoBean.exibir}">
+						<p:outputLabel value="Índice de Goldman: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.indiceGoldman}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Tabela ASA: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.tabelaAsa}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Tabela NYHA: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.tabelaNyha}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Critérios de LEE: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.criteriosLee}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+					</p:panelGrid>
+					
+					<p:separator rendered="#{avaRiscCirurgicoBean.exibir}"/>
+					
+					<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" rendered="#{avaRiscCirurgicoBean.exibir}">	
+						<p:outputLabel value="Risco Cirúrgico Grau: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.riscoCirurgicoGrau}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+						
+						<p:outputLabel value="Paciente: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.paciente}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+					</p:panelGrid>	
+						
+					<p:separator rendered="#{avaRiscCirurgicoBean.exibir}"/>
+						
+					<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" rendered="#{avaRiscCirurgicoBean.exibir}">
+						<p:outputLabel value="Observação: " style="font-weight: bold"/>
+						<h:outputText value="#{avaRiscCirurgicoBean.riscoCirurgico.observacao}" 
+						style="font-weight: bold; color: red; text-transform: uppercase"/>
+					</p:panelGrid>
+						
+					<p:separator rendered="#{avaRiscCirurgicoBean.exibir}"/>
+						
+					<p:panelGrid columns="4" styleClass="ui-panelgrid-blank" rendered="#{avaRiscCirurgicoBean.exibir}">
+						<p:commandButton value="Nova Consulta"
+							actionListener="#{avaRiscCirurgicoBean.novaBusca}"
+							update=":formPesquisa:panelIdDados :formPesquisa:paneldados" 
+							icon="fa fa-repeat"
+							style="font-size: 5em">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+						
+						<p:commandButton value="Imprimir" icon="fa fa-print"
+							 update=":mensagem" />
+							 
+						
+							
+					</p:panelGrid>
+				</h:panelGroup>
+
+			</p:panel>
+		</h:form>
+		
+		<script type="text/javascript">
+			function clicar(){
+				documento.getElementById('codigo').focus();
+			}
+		</script>
+
+	</ui:define>
+
+</ui:composition>

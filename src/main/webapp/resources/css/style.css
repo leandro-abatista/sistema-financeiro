@@ -82,6 +82,11 @@ ui-datatable-footer{
 	background: #3CB371 !important;
 }
 
+.panelCustom{
+	width: 1130px;
+	height: 430;
+}
+
 /*---------------------------------------------------PANELMENU------------------------------------------------------------*/
 .ui-panelmenu-content{
 	background-color: #ADFF2F !important;
@@ -96,18 +101,52 @@ ui-datatable-footer{
 }
 
 input[aria-required="true"] {
-	color: blue;
-	font-weight: bold;
+	color: blue !important;
+	font-weight: bold !important;
+}
+
+.inputCustom{
+	color: blue !important;
 	text-transform: uppercase;
+	font-weight: bold !important;
+}
+
+.inputEmailCustom{
+	color: blue !important;
+	font-weight: bold !important;
+}
+
+.inputTextAreaCustom{
+	color: blue !important;
+	font-weight: bold !important;
 }
 
 .ui-separator{
 	height: 7px !important;
 	background: #0000CD !important;
+	border: #0000CD solid 1px !important;
 }
 
 .ui-fieldset{
 	background: #ADD8E6 !important;
+}
+
+.ui-growl-error, .ui-growl-fatal, .ui-messages .ui-messages-error, .ui-message.ui-message-error, .ui-messages .ui-messages-fatal, .ui-message.ui-message-fatal {
+        width: 300px !important;
+        text-align: left;
+}
+
+.botaoFinalizar{
+	width: 150px !important;
+}
+
+.botaoLogar{
+	width: 300px !important;
+	background: #FF4500 !important;
+}
+
+.dlgAutentication{
+	text-align: center !important;
 }
 
 /*============================================================================================================================================================*/

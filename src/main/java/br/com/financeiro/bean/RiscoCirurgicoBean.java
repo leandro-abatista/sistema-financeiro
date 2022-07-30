@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
+import javax.ws.rs.POST;
 
 import org.omnifaces.util.Messages;
 
@@ -30,6 +33,7 @@ public class RiscoCirurgicoBean implements Serializable {
 	private RiscoCirurgico riscoCirurgico;
 	private RiscoCirurgicoDao riscoCirurgicoDao = new RiscoCirurgicoDao();
 	private List<RiscoCirurgico> riscosCirurgicos;
+	private String[] selectAntPessoais;
 
 	private EnderecoDao enderecoDao = new EnderecoDao();
 	private List<Endereco> enderecos;
@@ -41,10 +45,20 @@ public class RiscoCirurgicoBean implements Serializable {
 	private List<Medico> medicos;
 
 	private UsuarioDao usuarioDao = new UsuarioDao();
+	
+	private boolean exibir;
 
 	@ManagedProperty(value = "#{autenticacaoBean}")
 	private AutenticacaoBean autenticacaoBean;
 
+	public String[] getSelectAntPessoais() {
+		return selectAntPessoais;
+	}
+	
+	public void setSelectAntPessoais(String[] selectAntPessoais) {
+		this.selectAntPessoais = selectAntPessoais;
+	}
+	
 	public RiscoCirurgico getRiscoCirurgico() {
 		return riscoCirurgico;
 	}
@@ -77,6 +91,14 @@ public class RiscoCirurgicoBean implements Serializable {
 		return medicos;
 	}
 	
+	public boolean isExibir() {
+		return exibir;
+	}
+
+	public void setExibir(boolean exibir) {
+		this.exibir = exibir;
+	}
+
 	/**
 	 * Método para criar um novo objeto ARC
 	 */
@@ -108,5 +130,26 @@ public class RiscoCirurgicoBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
+	
+	@PostConstruct
+	public void listarRC() {
+		try {
+			riscosCirurgicos = riscoCirurgicoDao.listar();
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Erro ao tentar listar os riscos cirúrgicos!");
+			erro.printStackTrace();
+		}
+	}
+	
+	public void visualizar(ActionEvent evento) {
+		try {
+			riscoCirurgico = (RiscoCirurgico) evento.getComponent().getAttributes().get("objetoSelecionado");
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Erro ao tentar carregar as informações do risco cirúrgico selecionado!");
+			erro.printStackTrace();
+		}
+	}
+	
+	
 
 }

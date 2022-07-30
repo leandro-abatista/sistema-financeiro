@@ -32,6 +32,8 @@
 		<!-- Cria as tabelas do banco de dados -->
 		<property name="hbm2ddl.auto">update</property>
 		
+		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+		
 		
 		<!-- Mapeamento das tabelas  -->
 		<mapping class="br.com.financeiro.domain.Cliente" />

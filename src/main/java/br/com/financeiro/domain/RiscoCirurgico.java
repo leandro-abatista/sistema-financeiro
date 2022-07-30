@@ -21,6 +21,8 @@ public class RiscoCirurgico extends GenericDomain {
 
 	@Column(nullable = false, length = 150)
 	private String nome;
+	@Column(nullable = true, length = 14)
+	private String cpf;
 	@Column(nullable = false)
 	private String idade;
 	@Column(nullable = false, length = 15)
@@ -97,6 +99,16 @@ public class RiscoCirurgico extends GenericDomain {
 	@Column(name = "VERSAO", nullable = false)
 	private Long versao;
 	
+	
+	
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
 	public String getCelular() {
 		return celular;
 	}

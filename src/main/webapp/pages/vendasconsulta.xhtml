@@ -29,8 +29,7 @@
 				</p:panelGrid>
 
 				<h:panelGroup layout="block" id="paneldados">
-					<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" 
-						rendered="#{vendaPesquisaBean.exibir}">
+					<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" rendered="#{vendaPesquisaBean.exibir}">
 						
 						<p:outputLabel value="Cliente: " style="font-weight: bold"/>
 						<h:outputText value="#{vendaPesquisaBean.venda.cliente.pessoa.nome}" 
@@ -75,6 +74,8 @@
 								<h:outputText value="#{item.produto.descricao}" />
 							</p:column>
 						</p:dataTable>
+						
+					<p:separator rendered="#{vendaPesquisaBean.exibir}"/>
 						
 					<p:panelGrid columns="4" rendered="#{vendaPesquisaBean.exibir}" styleClass="ui-panelgrid-blank">
 					

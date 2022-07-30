@@ -100,10 +100,14 @@
 				</p:selectOneMenu>
 
 				<p:outputLabel for="dataCadastro" value="Data de Cadastro:" />
-				<p:calendar id="dataCadastro" style="font-weight: bold"
-					value="#{clienteBean.cliente.dataCadastro}" required="true"
+				<p:calendar id="dataCadastro" 
+					mode="popup"
+					navigator="true"
+					showButtonPanel="true"
+					value="#{clienteBean.cliente.dataCadastro}" 
+					required="true"
 					requiredMessage="O campo 'Data de Cadastro' é obrigatório"
-					size="10" locale="pt_BR"/>
+					size="10" locale="pt_BR" pattern="dd/MM/yyyy"/>
 
 				<p:outputLabel for="liberado" value="Liberado:" />
 				<p:selectBooleanCheckbox id="liberado" style="font-weight: bold"

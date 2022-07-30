@@ -101,7 +101,9 @@
 				<p:separator/>
 				
 				<p:panelGrid>
-					<p:commandButton value="Finalizar"
+					<p:commandButton 
+						styleClass="botaoFinalizar"
+						value="Finalizar"
 						actionListener="#{vendaBean.finalizar}"
 						update=":mensagem :formFinalizacao:panelFinalizar"
 						icon="fa fa-money"
@@ -123,21 +125,21 @@
 			
 			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" id="panelFinalizar">
 			
-				<p:outputLabel value="Horário:" />
-				<h:outputText value="#{vendaBean.venda.horario}" style="color: red; font-weight: bold">
+				<h:outputLabel for="horario" value="Horário:" />
+				<h:outputText id="horario" value="#{vendaBean.venda.horario}" style="color: red; font-weight: bold">
 					<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" locale="pt_BR"
 						timeZone="America/Sao_Paulo" />
 				</h:outputText>
 
-				<p:outputLabel value="Total R$:" />
-				<h:outputText value="#{vendaBean.venda.precoTotal}" style="color: red; font-weight: bold">
+				<h:outputLabel for="total" value="Total R$:" />
+				<h:outputText id="total" value="#{vendaBean.venda.precoTotal}" style="color: red; font-weight: bold">
 					<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 				</h:outputText> 
 				
-				<p:outputLabel for="usuario" value="Usuário Logado:" />
+				<h:outputLabel for="usuario" value="Usuário Logado:" />
 				<h:outputText id="usuario" value="#{vendaBean.autenticacaoBean.usuarioLogado.pessoa.nome}" />
 
-				<p:outputLabel for="funcionario" value="Funcionário:" />
+				<h:outputLabel for="funcionario" value="Funcionário:*" />
 				<p:selectOneMenu id="funcionario"
 					style="color: red; font-weight: bold"
 					value="#{vendaBean.venda.funcionario}"
@@ -150,7 +152,7 @@
 						itemLabel="#{funcionario.pessoa.nome} - #{funcionario.pessoa.cpf}" />
 				</p:selectOneMenu>
 				
-				<p:outputLabel for="cliente" value="Cliente:" />
+				<h:outputLabel for="cliente" value="Cliente:*" />
 				<p:selectOneMenu id="cliente" 
 					style="color: red; font-weight: bold"
 					value="#{vendaBean.venda.cliente}"
@@ -163,7 +165,7 @@
 						itemLabel="#{cliente.pessoa.nome} - #{cliente.pessoa.cpf}" />
 				</p:selectOneMenu>
 				
-				<p:outputLabel for="fp" value="Forma Pagamento:" />
+				<h:outputLabel for="fp" value="Forma Pagamento:*" />
 				<p:selectOneMenu id="fp" 
 					style="color: red; font-weight: bold"
 					value="#{pagamentoBean.pagamento}"
@@ -181,10 +183,16 @@
 			<p:separator/>
 			
 			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
-				<p:commandButton value="Salvar" actionListener="#{vendaBean.salvar}"
+				<p:commandButton 
+					value="Salvar" 
+					actionListener="#{vendaBean.salvar}"
 					update=":mensagem :formListagem:tabela :formListagem:tableItens :formListagem:panelFinalizacao"
-					oncomplete="PF('dialogo').hide();" icon="fa fa-save"/>
-				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" icon="fa fa-remove"/>
+					oncomplete="PF('dialogo').hide();" 
+					icon="fa fa-save"/>
+				<p:commandButton 
+					value="Fechar" 
+					oncomplete="PF('dialogo').hide();" 
+					icon="fa fa-remove"/>
 			</p:panelGrid>
 		</h:form>
 	

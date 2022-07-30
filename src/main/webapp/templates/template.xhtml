@@ -33,7 +33,7 @@
 
 		<p:layoutUnit position="north" minSize="50">
            <h:outputText 
-			value="Bem Vindo: #{autenticacaoBean.usuarioLogado.pessoa.nome}" 
+			value="Bem Vindo(a): #{autenticacaoBean.usuarioLogado.pessoa.nome}" 
 			style="font-widht: bold; font-size: 20px; color: red; text-transform: uppercase"/>
         </p:layoutUnit>
 
@@ -57,8 +57,8 @@
 						<p:menuitem value="Fornecedor" outcome="/pages/fornecedor.xhtml" icon="fa fa-building"/>
 						<p:menuitem value="Produto" outcome="/pages/produto.xhtml" icon="fa fa-cube"/>
 						<p:menuitem value="Cartão" outcome="/pages/formapag.xhtml" icon="fa fa-cc"/>
-						<p:menuitem value="Médico" outcome="/pages/medico.xhtml" icon="fa fa-stethoscope"/>
-						<p:menuitem value="Especialidade" outcome="/pages/especialidade.xhtml"/>
+						<p:menuitem value="Médico" outcome="/pages/medico.xhtml" icon="fa fa-user-md"/>
+						<p:menuitem value="Especialidade" outcome="/pages/especialidade.xhtml" icon="fa fa-stethoscope"/>
 					</p:submenu>
 					
 					<p:submenu label="Estoque">
@@ -76,6 +76,7 @@
 					
 					<p:submenu label="Risco Cirúrgico">
 						<p:menuitem value="Avaliação RC" outcome="/pages/riscocirurgico.xhtml" icon="fa fa-heartbeat"/>
+						<p:menuitem value="Buscar RC" outcome="/pages/consultaavaliacaoriscocirurgico.xhtml" icon="fa fa-search"/>
 					</p:submenu>
 
 					<p:submenu label="Ajuda">
