@@ -7,37 +7,41 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.component.datatable.DataTable;
-import org.primefaces.component.panelgrid.PanelGrid;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.financeiro.dao.FornecedorDao;
 import br.com.financeiro.dao.ProdutoDao;
+import br.com.financeiro.dao.UsuarioDao;
 import br.com.financeiro.domain.Fornecedor;
 import br.com.financeiro.domain.Produto;
+import br.com.financeiro.domain.Usuario;
 import br.com.financeiro.util.HibernateUtil;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperReport;
 
 @ManagedBean(name = "produtoBean")
 @ViewScoped
-public class ProdutoBean implements Serializable{
+public class ProdutoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -46,6 +50,11 @@ public class ProdutoBean implements Serializable{
 	private Produto produto;
 	private List<Produto> produtos;
 	private List<Fornecedor> fornecedores;
+	
+	private UsuarioDao usuarioDao = new UsuarioDao();
+	
+	@ManagedProperty(value = "#{autenticacaoBean}")
+	private AutenticacaoBean autenticacaoBean;
 
 
 	public Produto getProduto() {
@@ -70,6 +79,14 @@ public class ProdutoBean implements Serializable{
 
 	public void setFornecedores(List<Fornecedor> fornecedores) {
 		this.fornecedores = fornecedores;
+	}
+	
+	public AutenticacaoBean getAutenticacaoBean() {
+		return autenticacaoBean;
+	}
+
+	public void setAutenticacaoBean(AutenticacaoBean autenticacaoBean) {
+		this.autenticacaoBean = autenticacaoBean;
 	}
 
 	@PostConstruct
@@ -107,6 +124,9 @@ public class ProdutoBean implements Serializable{
 			 * 
 			 * }
 			 */
+			Usuario usuario = usuarioDao.buscar(autenticacaoBean.getUsuarioLogado().getId());
+			produto.setUsuario(usuario);
+			produto.setDataHora(LocalDateTime.now());
 			Produto produtoRetorno = produtoDao.merge(produto);
 
 			Path origem = Paths.get(produto.getCaminho());
@@ -207,10 +227,15 @@ public class ProdutoBean implements Serializable{
 			
 			Connection conexao = HibernateUtil.getConexao();
 			
+			//JasperReport report = JasperCompileManager.compileReport(caminho);
+			
 			//blioteca do jasperreports
 			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
 			
 			JasperPrintManager.printReport(relatorio, true);
+			
+			//JasperExportManager.exportReportToPdf(relatorio);
+			System.out.println("Relatório gerado");
 			
 		} catch (JRException | RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar carregar o relatório!");

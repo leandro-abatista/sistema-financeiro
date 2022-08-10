@@ -1,8 +1,10 @@
 package br.com.financeiro.bean;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -11,7 +13,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.ws.rs.POST;
 
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import org.primefaces.component.datatable.DataTable;
 
 import br.com.financeiro.dao.CirurgiaDao;
 import br.com.financeiro.dao.EnderecoDao;
@@ -23,6 +27,11 @@ import br.com.financeiro.domain.Endereco;
 import br.com.financeiro.domain.Medico;
 import br.com.financeiro.domain.RiscoCirurgico;
 import br.com.financeiro.domain.Usuario;
+import br.com.financeiro.util.HibernateUtil;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 @ManagedBean(name = "rcBean")
 @ViewScoped
@@ -146,6 +155,49 @@ public class RiscoCirurgicoBean implements Serializable {
 			riscoCirurgico = (RiscoCirurgico) evento.getComponent().getAttributes().get("objetoSelecionado");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Erro ao tentar carregar as informações do risco cirúrgico selecionado!");
+			erro.printStackTrace();
+		}
+	}
+	
+	public void imprimir() {
+		try {
+			DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("formBuscar:tabela");
+			
+			Map<String, Object> filtros = tabela.getFilters();
+			
+			Long codigo = (Long) filtros.get("codigo");
+			String nome = (String) filtros.get("nome");
+			
+			//caminho do relatório
+			String caminho = Faces.getRealPath("/reports/rel_risco_cirurgico.jasper");
+			
+//			Map<String, Object> parametros = new HashMap<>();
+//			
+//			if (proDescricao == null) {
+//				parametros.put("PRODUTO_DESCRICAO", "%%");
+//			} else {
+//				parametros.put("PRODUTO_DESCRICAO", "%" + proDescricao + "%");
+//			}
+//			
+//			if (forDescricao == null) {
+//				parametros.put("FORNECEDOR_DESCRICAO", "%%");
+//			} else {
+//				parametros.put("FORNECEDOR_DESCRICAO", "%" + forDescricao + "%");
+//			}
+			
+			Connection conexao = HibernateUtil.getConexao();
+			
+			//blioteca do jasperreports
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho,null, conexao);
+			
+			JasperPrintManager.printReport(relatorio, true);
+			
+			Messages.addFlashGlobalInfo("Relatório gerado com sucesso!");
+			
+			System.out.println("Relatório gerado");
+			
+		} catch (JRException | RuntimeException erro) {
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar carregar o relatório!");
 			erro.printStackTrace();
 		}
 	}

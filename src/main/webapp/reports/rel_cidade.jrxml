@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rel_cidade" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="136de2d0-502c-4a7e-874c-2e1c5777ab40">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[ZXN0YWRvIEFTICwyMTYsMTUsYzIzMjNhYzctZjdkOS00NTllLWEyYzctZGMwNjA1MDQ0MjZmO2Np
+ZGFkZSBBUyAsNzEsMyxmMGE5NTI2YS1kZTk0LTQ4ODItODBjZC04MDg5N2QwYzFkZjI7]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sistema-Gestao-Estoque-Financeiro"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="197"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="795"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT cidade.nome,
+	cidade.id,
+	estado.sigla
+FROM cidade
+	INNER JOIN estado ON 
+	 cidade.id_estado = estado.id]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cidade"/>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cidade"/>
+	</field>
+	<field name="sigla" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sigla"/>
+		<property name="com.jaspersoft.studio.field.label" value="sigla"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estado"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="60" forecolor="#FFFFFF" backcolor="#1711D1" uuid="b3b4680b-ca47-4c4a-9bb6-f6d59eb1faf1"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Ubuntu" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ - Cidades - ///////////////////////////////////////////////
+//]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="8" width="555" height="30" forecolor="#FCFCFC" backcolor="#2311BF" uuid="c4d4220d-b307-43d1-a4c1-1fa6eab7ef5c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de cidades]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="70" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="40" width="100" height="30" uuid="c7b38764-55e3-40bd-98b6-59acbdace155">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dc5923f1-d90c-49cf-bab2-e3793dfedaaf"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid" lineColor="#2508FF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="9" width="100" height="30" uuid="a6b85255-cdd8-455c-8a3d-336e93b7b9e5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dc5923f1-d90c-49cf-bab2-e3793dfedaaf"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid" lineColor="#2508FF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="40" width="350" height="30" uuid="668333fd-f4db-4ee6-bc5a-0e8305f2acc8"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid" lineColor="#2508FF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="100" y="9" width="350" height="30" uuid="ba93c363-6584-4932-b9f4-1fbcebf8c382"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid" lineColor="#2508FF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cidade]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="450" y="40" width="100" height="30" uuid="62d45d72-ab40-43a2-8980-c73bea30538e"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid" lineColor="#2508FF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sigla}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="450" y="9" width="100" height="30" uuid="a45457c7-7fd6-4c4b-92fe-747d2347bfc5"/>
+				<box>
+					<pen lineWidth="1.25" lineStyle="Solid" lineColor="#2508FF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UF]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="70" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="40" width="260" height="30" forecolor="#FFFFFF" backcolor="#2F1DCF" uuid="d8df7e3a-200f-4c89-bca5-8c6931bdeb8c"/>
+				<textElement textAlignment="Left">
+					<font fontName="Ubuntu" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["   Página de referência: " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="260" y="40" width="120" height="30" forecolor="#FFFFFF" backcolor="#2F1DCF" uuid="b143f249-bdce-4a30-8482-38f7ce972c5f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Ubuntu" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório impresso em:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="10" width="555" height="30" forecolor="#FFFFFF" backcolor="#2F1DCF" uuid="a6b57702-263f-4566-a8ff-24d0ce147094"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Endereço: Ave. Rio Branco, 197 - Centro - Florianópolis-SC]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement mode="Opaque" x="380" y="40" width="90" height="30" forecolor="#FFFFFF" backcolor="#2F1DCF" uuid="c26a2f69-0c6f-4b08-9dcb-125c4e10b137"/>
+				<textElement textAlignment="Center">
+					<font fontName="Ubuntu" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm:ss">
+				<reportElement mode="Opaque" x="470" y="40" width="85" height="30" forecolor="#FFFFFF" backcolor="#2F1DCF" uuid="4e37c59e-12c6-47d0-96ed-af83fef53d9f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Ubuntu" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

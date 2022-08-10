@@ -546,19 +546,36 @@
 			minimizable="true" closeOnEscape="true">
 
 			<h:form id="formBuscar">
+				
+				<p:toolbar>
+					<f:facet name="right">
+					<p:commandButton value="PDF"  icon="fa fa-print" 
+						 update=":formCadastro:panelCadastro
+							:formCadastro:panelCadastro1
+							:formCadastro:panelCadastro2
+							:formCadastro:panelCadastro3
+							:formCadastro:panelCadastro4
+							:formCadastro:panelCadastro5
+							:formCadastro:panelCadastro6
+							:formCadastro:panelCadastro7
+							:formCadastro:panelCadastro8 
+							"
+		                 actionListener="#{rcBean.imprimir}"/>
+				</f:facet>
+				</p:toolbar>
 
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-					value="#{rcBean.riscosCirurgicos}" var="rc">
+					value="#{rcBean.riscosCirurgicos}" var="rc" paginator="true" rows="10">
 
-					<p:column headerText="ID" styleClass="campoid">
+					<p:column headerText="ID" styleClass="campoid" filterBy="#{rc.id}" sortBy="#{rc.id}">
 						<h:outputText value="#{rc.id}" />
 					</p:column>
 
-					<p:column headerText="NOME">
+					<p:column headerText="NOME" filterBy="#{rc.nome}" sortBy="#{rc.nome}">
 						<h:outputText value="#{rc.nome}" />
 					</p:column>
 
-					<p:column headerText="DATA AVALIAÇÃO">
+					<p:column headerText="DATA AVALIAÇÃO" filterBy="#{rc.dataAvaliacao}" sortBy="#{rc.dataAvaliacao}">
 						<h:outputText value="#{rc.dataAvaliacao}">
 							<f:convertDateTime locale="pt-BR" pattern="dd/MM/yyyy HH:mm"
 								timeZone="GMT-3" />

@@ -43,40 +43,40 @@
 			<h:form>
 				<p:panelMenu>
 					<p:submenu label="Arquivo">
-						<p:menuitem value="Principal" outcome="/pages/principal.xhtml" icon="fa fa-home"/>
+						<p:menuitem value="Principal" outcome="/pages/principal.jsf" icon="fa fa-home"/>
 					</p:submenu>
 
 					<p:submenu label="Cadastro" rendered="#{autenticacaoBean.temPermissao(['A','G'])}">
-						<p:menuitem value="Estado" outcome="/pages/estado.xhtml" />
-						<p:menuitem value="Cidade" outcome="/pages/cidade.xhtml" />
-						<p:menuitem value="Endereço" outcome="/pages/endereco.xhtml" />
-						<p:menuitem value="Pessoa" outcome="/pages/pessoa.xhtml" />
-						<p:menuitem value="Cliente" outcome="/pages/cliente.xhtml" icon="fa fa-group"/>
-						<p:menuitem value="Funcionário" outcome="/pages/funcionario.xhtml" />
-						<p:menuitem value="Usuário" outcome="/pages/usuario.xhtml" icon="fa fa-user"/>
-						<p:menuitem value="Fornecedor" outcome="/pages/fornecedor.xhtml" icon="fa fa-building"/>
-						<p:menuitem value="Produto" outcome="/pages/produto.xhtml" icon="fa fa-cube"/>
-						<p:menuitem value="Cartão" outcome="/pages/formapag.xhtml" icon="fa fa-cc"/>
-						<p:menuitem value="Médico" outcome="/pages/medico.xhtml" icon="fa fa-user-md"/>
-						<p:menuitem value="Especialidade" outcome="/pages/especialidade.xhtml" icon="fa fa-stethoscope"/>
+						<p:menuitem value="Estado" outcome="/pages/estado.jsf" />
+						<p:menuitem value="Cidade" outcome="/pages/cidade.jsf" />
+						<p:menuitem value="Endereço" outcome="/pages/endereco.jsf" icon="fa fa-map"/>
+						<p:menuitem value="Pessoa" outcome="/pages/pessoa.jsf" icon="fa fa-group"/>
+						<p:menuitem value="Cliente" outcome="/pages/cliente.jsf" icon="fa fa-group"/>
+						<p:menuitem value="Funcionário" outcome="/pages/funcionario.jsf" icon="fa fa-group"/>
+						<p:menuitem value="Usuário" outcome="/pages/usuario.jsf" icon="fa fa-user"/>
+						<p:menuitem value="Fornecedor" outcome="/pages/fornecedor.jsf" icon="fa fa-building"/>
+						<p:menuitem value="Produto" outcome="/pages/produto.jsf" icon="fa fa-cube"/>
+						<p:menuitem value="Cartão" outcome="/pages/formapag.jsf" icon="fa fa-cc"/>
+						<p:menuitem value="Médico" outcome="/pages/medico.jsf" icon="fa fa-user-md"/>
+						<p:menuitem value="Especialidade" outcome="/pages/especialidade.jsf" icon="fa fa-stethoscope"/>
 					</p:submenu>
 					
 					<p:submenu label="Estoque">
-						<p:menuitem value="Est. produtos" outcome="/pages/estoque.xhtml" icon="fa fa-cubes"/>
+						<p:menuitem value="Est. produtos" outcome="/pages/estoque.jsf" icon="fa fa-cubes"/>
 					</p:submenu>
 
 					<p:submenu label="Vendas">
-						<p:menuitem value="Nova Venda" outcome="/pages/venda.xhtml" icon="fa fa-shopping-cart"/>
+						<p:menuitem value="Nova Venda" outcome="/pages/venda.jsf" icon="fa fa-shopping-cart"/>
 					</p:submenu>
 					
 					<p:submenu label="Consultas">
-						<p:menuitem value="Produtos" outcome="/pages/produtosconsulta.xhtml" icon="fa fa-cubes"/>
-						<p:menuitem value="Vendas" outcome="/pages/vendasconsulta.xhtml" icon="fa fa-shopping-cart"/>
+						<p:menuitem value="Produtos" outcome="/pages/produtosconsulta.jsf" icon="fa fa-cubes"/>
+						<p:menuitem value="Vendas" outcome="/pages/vendasconsulta.jsf" icon="fa fa-shopping-cart"/>
 					</p:submenu>
 					
 					<p:submenu label="Risco Cirúrgico">
-						<p:menuitem value="Avaliação RC" outcome="/pages/riscocirurgico.xhtml" icon="fa fa-heartbeat"/>
-						<p:menuitem value="Buscar RC" outcome="/pages/consultaavaliacaoriscocirurgico.xhtml" icon="fa fa-search"/>
+						<p:menuitem value="Avaliação RC" outcome="/pages/riscocirurgico.jsf" icon="fa fa-heartbeat"/>
+						<p:menuitem value="Buscar RC" outcome="/pages/consultaavaliacaoriscocirurgico.jsf" icon="fa fa-search"/>
 					</p:submenu>
 
 					<p:submenu label="Ajuda">

@@ -58,7 +58,7 @@ public class AutenticacaoBean implements Serializable {
 				return;
 			}
 			
-			Faces.redirect("./pages/principal.xhtml");
+			Faces.redirect("./pages/principal.jsf");
 			Messages.addGlobalInfo("Usuário logado com sucesso!");
 		} catch (IOException | RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar autenticar o usuário!");
@@ -68,7 +68,7 @@ public class AutenticacaoBean implements Serializable {
 	
 	public void logout() {
 		try {
-			Faces.redirect("./pages/autenticacao.xhtml");
+			Faces.redirect("./pages/autenticacao.jsf");
 			Messages.addGlobalInfo("Logout realizado com sucesso!");
 		} catch (IOException | RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar realizar logout do sistema!");

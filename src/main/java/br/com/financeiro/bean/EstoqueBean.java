@@ -119,6 +119,7 @@ public class EstoqueBean implements Serializable {
 			} else {
 				exibir = true;
 				produto = resultado;
+				fornecedores = fornecedorDao.listar();
 			}
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar buscar um produto!");

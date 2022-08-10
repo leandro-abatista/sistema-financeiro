@@ -1,19 +1,29 @@
 package br.com.financeiro.bean;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import org.primefaces.component.datatable.DataTable;
 
 import br.com.financeiro.dao.CidadeDao;
 import br.com.financeiro.dao.EstadoDao;
 import br.com.financeiro.domain.Cidade;
 import br.com.financeiro.domain.Estado;
+import br.com.financeiro.util.HibernateUtil;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 @ManagedBean(name = "cidadeBean")
 @ViewScoped
@@ -108,6 +118,47 @@ public class CidadeBean implements Serializable {
 			Messages.addGlobalInfo("Cidade removida com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar remover a cidade");
+			erro.printStackTrace();
+		}
+	}
+	
+	public void imprimir() {
+		try {
+			DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("formListagem:tabela");
+			
+			Map<String, Object> filtros = tabela.getFilters();
+			
+			String proDescricao = (String) filtros.get("descricao");
+			String forDescricao = (String) filtros.get("fornecedor.descricao");
+			
+			//caminho do relatório
+			String caminho = Faces.getRealPath("/reports/rel_cidade.jasper");
+			
+//			Map<String, Object> parametros = new HashMap<>();
+//			
+//			if (proDescricao == null) {
+//				parametros.put("PRODUTO_DESCRICAO", "%%");
+//			} else {
+//				parametros.put("PRODUTO_DESCRICAO", "%" + proDescricao + "%");
+//			}
+//			
+//			if (forDescricao == null) {
+//				parametros.put("FORNECEDOR_DESCRICAO", "%%");
+//			} else {
+//				parametros.put("FORNECEDOR_DESCRICAO", "%" + forDescricao + "%");
+//			}
+			
+			Connection conexao = HibernateUtil.getConexao();
+			
+			//blioteca do jasperreports
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho,null, conexao);
+			
+			JasperPrintManager.printReport(relatorio, true);
+			
+			System.out.println("Relatório gerado");
+			
+		} catch (JRException | RuntimeException erro) {
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar carregar o relatório!");
 			erro.printStackTrace();
 		}
 	}

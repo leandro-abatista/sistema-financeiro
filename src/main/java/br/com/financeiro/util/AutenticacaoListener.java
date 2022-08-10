@@ -17,19 +17,19 @@ public class AutenticacaoListener implements PhaseListener {
 	public void afterPhase(PhaseEvent event) {
 		
 		String paginaAtual = Faces.getViewId();
-		boolean pagAutenticada = paginaAtual.contains("autenticacao.xhtml");
+		boolean pagAutenticada = paginaAtual.contains("autenticacao.jsf");
 		
 		if (!pagAutenticada) {
 			AutenticacaoBean autenticacaoBean = Faces.getSessionAttribute("autenticacaoBean");
 
 			if (autenticacaoBean == null) {
-				Faces.navigate("/pages/autenticacao.xhtml");
+				Faces.navigate("/pages/autenticacao.jsf");
 				return;
 			}
 			
 			Usuario	usuario = autenticacaoBean.getUsuario();//pega o usuário que está logado
 			if (usuario == null) {
-				Faces.navigate("/pages/autenticacao.xhtml");
+				Faces.navigate("/pages/autenticacao.jsf");
 				return;
 			}
 		}

@@ -23,15 +23,8 @@
 				</f:facet>
 				
 				<f:facet name="right">
-					 <p:menuButton value="Imprimir">
-		                <p:menuitem value="PDF"  icon="fa fa-print" update=":formCadastro:panelCadastro"
-		                 actionListener="#{produtoBean.imprimir}"
-							>
-		                </p:menuitem>
-		                <p:menuitem value="Update"  icon="pi pi-refresh" />
-		                <p:menuitem value="Delete"  ajax="false" icon="pi pi-times" />
-		                <p:menuitem value="Homepage"  icon="pi pi-home" />
-		            </p:menuButton>
+					<p:commandButton value="PDF"  icon="fa fa-print" update=":formCadastro:panelCadastro"
+		                 actionListener="#{produtoBean.imprimir}"/>
 				</f:facet>
 				</p:toolbar>
 		
@@ -47,7 +40,7 @@
 					<h:outputText value="#{produto.descricao}" />
 				</p:column>
 
-				<p:column headerText="Quantidade" width="100">
+				<p:column headerText="QTD" width="70">
 					<h:outputText value="#{produto.quantidade}" />
 				</p:column>
 
@@ -55,6 +48,10 @@
 					<h:outputText value="#{produto.preco}">
 						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 					</h:outputText>	
+				</p:column>
+				
+				<p:column headerText="Ativo" width="30">
+					<p:selectBooleanCheckbox value="#{produto.comercializavel}" disabled="true" />
 				</p:column>
 
 				<p:column headerText="Fornecedor" filterBy="#{produto.fornecedor.nomeFantasia}" 
@@ -108,22 +105,50 @@
 		
 			<p:panelGrid columns="4" styleClass="ui-panelgrid-blank" id="panelCadastro">
 			
-				<p:outputLabel for="descricao" value="Descrição:" />
+				<h:outputLabel for="descricao" value="Descrição:" />
 				<p:inputText id="descricao" maxlength="50" size="40"
 					value="#{produtoBean.produto.descricao}" required="true"
 					requiredMessage="O campo 'Descrição' é obrigatório" />
 
-				<p:outputLabel value="Quantidade:*" />
-				<p:inputText maxlength="5" size="10"
+				<h:outputLabel for="qtd" value="Quantidade:*" />
+				<p:inputText id="qtd" maxlength="5" size="10"
 					value="#{produtoBean.produto.quantidade}" required="true"
 					requiredMessage="O campo 'Quantidade' é obrigatório"
 					converterMessage="Informe um valor válido para o campo 'Quantidade'"
 					validatorMessage="Informe um valor entre 0 e 1000 para o campo 'Quantidade'">
 					<f:validateLongRange minimum="0" maximum="1000" />
-				</p:inputText>	
+				</p:inputText>
+				
+				<h:outputLabel for="categoria" value="Categoria:*"/>
+                <p:selectOneMenu id="categoria" value="#{produtoBean.produto.categoria}">
+                    <f:selectItem itemLabel="Selecione" itemValue=""/>
+                    <f:selectItem itemLabel="Padaria" itemValue="Padaria"/>
+                    <f:selectItem itemLabel="Alimentos" itemValue="Alimentos"/>
+                    <f:selectItem itemLabel="Hortifruti" itemValue="Hortifruti"/>
+                    <f:selectItem itemLabel="Prod. Limpeza" itemValue="Prod. Limpeza"/>
+                    <f:selectItem itemLabel="Higiene Pessoal" itemValue="Higiene Pessoal"/>
+                    <f:selectItem itemLabel="Bebidas" itemValue="Bebidas"/>
+                    <f:selectItem itemLabel="Papelaria" itemValue="Papelaria"/>
+                </p:selectOneMenu>
+                
+                <h:outputLabel for="tipounid" value="Unidade Med.:*"/>
+                <p:selectOneMenu id="tipounid" value="#{produtoBean.produto.tipoUnidade}">
+                    <f:selectItem itemLabel="Selecione" itemValue=""/>
+                    <f:selectItem itemLabel="Caixa" itemValue="Caixa"/>
+                    <f:selectItem itemLabel="Litro" itemValue="Litro"/>
+                    <f:selectItem itemLabel="Pote" itemValue="Pote"/>
+                    <f:selectItem itemLabel="Metro" itemValue="Metro"/>
+                    <f:selectItem itemLabel="Unidade" itemValue="Unidade"/>
+                    <f:selectItem itemLabel="Mililitro" itemValue="Mililitro"/>
+                    <f:selectItem itemLabel="Peça" itemValue="Peça"/>
+                    <f:selectItem itemLabel="Fardo" itemValue="Fardo"/>
+                    <f:selectItem itemLabel="Frasco" itemValue="Frasco"/>
+                    <f:selectItem itemLabel="Grama" itemValue="Grama"/>
+                    <f:selectItem itemLabel="Pacote" itemValue="Pacote"/>
+                </p:selectOneMenu>	
 
-				<p:outputLabel value="Preço:*" />
-				<p:inputText maxlength="7" size="10"
+				<h:outputLabel for="venda" value="Preço Compra:*" />
+				<p:inputText id="venda" maxlength="7" size="10"
 					value="#{produtoBean.produto.preco}" required="true"
 					requiredMessage="O campo 'Preço' é obrigatório"
 					converterMessage="Informe um valor válido para o campo 'Preço'"
@@ -131,9 +156,24 @@
 					<f:validateDoubleRange minimum="0.01" maximum="9999.99" />
 					<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 				</p:inputText>
+				
+				<h:outputLabel for="precovenda" value="Preço venda:*" />
+				<p:inputText id="precovenda" maxlength="7" size="10"
+					value="#{produtoBean.produto.valorVenda}" required="true"
+					requiredMessage="O campo 'Preço venda' é obrigatório"
+					converterMessage="Informe um valor válido para o campo 'Preço venda'"
+					validatorMessage="Informe um valor entre 0,01 e 9999,99 para o campo 'Preço'">
+					<f:validateDoubleRange minimum="0.01" maximum="9999.99" />
+					<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+				</p:inputText>
+				
+				<h:outputLabel for="comer" value="Comercializável:" />
+				<p:selectBooleanCheckbox id="comer" style="font-weight: bold"
+					value="#{produtoBean.produto.comercializavel}" required="true"
+					requiredMessage="O campo 'Comercializável' é obrigatório" />
 
-				<p:outputLabel value="Fornecedor:*" />
-				<p:selectOneMenu filter="true"
+				<h:outputLabel for="forn" value="Fornecedor:*" />
+				<p:selectOneMenu id="forn" filter="true"
 					value="#{produtoBean.produto.fornecedor}"
 					converter="omnifaces.SelectItemsConverter" required="true"
 					requiredMessage="O campo 'Fornecedor' é obrigatório">

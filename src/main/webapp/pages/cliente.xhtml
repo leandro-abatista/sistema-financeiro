@@ -11,12 +11,9 @@
 
 	<h:form id="formListagem">
 		<p:panel header="Lista de Clientes Cadastrados">
-			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-			paginatorAlwaysVisible="false" 
-			paginatorPosition="bottom"
-			value="#{clienteBean.clientes}" var="cliente"
-				paginator="true" rows="10">
-				<f:facet name="header">
+			
+			<p:toolbar>
+				<f:facet name="left">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" 
 						icon="fa fa-plus" style="font-size: 5em" 
 						actionListener="#{clienteBean.novo}"
@@ -24,6 +21,19 @@
 						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />			
 					</p:commandButton>
 				</f:facet>
+				
+				<f:facet name="right">
+					<p:commandButton value="PDF"  icon="fa fa-print" update=":formCadastro:panelCadastro"
+		                 actionListener="#{clienteBean.imprimir}"/>
+				</f:facet>
+			</p:toolbar>
+		
+			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+			paginatorAlwaysVisible="false" 
+			paginatorPosition="bottom"
+			value="#{clienteBean.clientes}" var="cliente"
+				paginator="true" rows="10">
+				
 
 				<p:column headerText="Código" width="50">
 					<h:outputText value="#{cliente.pessoa.id}" />

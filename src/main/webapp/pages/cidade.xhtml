@@ -11,15 +11,24 @@
 
 	<h:form id="formListagem">
 		<p:panel header="Lista das Cidades Cadastradas">
-			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado." paginator="true"
-			rows="10" value="#{cidadeBean.cidades}" var="cidade">
-				<f:facet name="header">
+		
+			<p:toolbar>
+				<f:facet name="left">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" 
 					actionListener="#{cidadeBean.novo}"
 					update=":formCadastro:panelCadastro" icon="fa fa-plus">
 						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
 				</f:facet>
+				
+				<f:facet name="right">
+					<p:commandButton value="PDF"  icon="fa fa-print" update=":formCadastro:panelCadastro"
+		                 actionListener="#{cidadeBean.imprimir}"/>
+				</f:facet>
+			</p:toolbar>
+		
+			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado." paginator="true"
+			rows="10" value="#{cidadeBean.cidades}" var="cidade">
 
 				<p:column headerText="Código" width="80">
 					<h:outputText value="#{cidade.id}"/>
